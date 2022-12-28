@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import oop.labs.lab4.data.configs.MathModelMapperConfig;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
