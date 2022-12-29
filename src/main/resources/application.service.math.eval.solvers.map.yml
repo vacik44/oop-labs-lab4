@@ -1,0 +1,3 @@
+classes:
+    - id: quadratic-form-significance-solver
+      class: oop.labs.lab4.service.math.eval.solvers.QuadraticFormSignificanceSolver

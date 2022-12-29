@@ -4,34 +4,38 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import oop.labs.lab4.data.configs.MathExternModelMapperConfig;
+import oop.labs.lab4.data.configs.MappingConfiguration;
 import oop.labs.lab4.service.math.exceptions.MathExternModelRecognitionException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 public class MathExternModelMapper
 {
+    private final Map<String, Class<?>> entities;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private final ModelEntities modelEntities;
-    public ModelEntities getModelEntities() { return modelEntities; }
 
-
-    MathExternModelMapper(MathExternModelMapperConfig config)
+    MathExternModelMapper(@Qualifier("MathExternModelMappingConfiguration") MappingConfiguration configuration) throws ClassNotFoundException
     {
-        try
+        entities = new HashMap<>();
+
+        for (var clazz : configuration.getClasses())
         {
-            modelEntities = new ModelEntities(config);
-        }
-        catch (ClassNotFoundException e)
-        {
-            throw new RuntimeException(e);
+            var entity = clazz.getClazz();
+            var jsonName = entity.getAnnotationsByType(JsonRootName.class)[0].value();
+
+            entities.put(jsonName, entity);
         }
     }
 
+
+    public Class<?> getEntityForName(String name)
+    {
+        return entities.get(name);
+    }
 
     public Object json2Entity(JsonNode jsonEntity, String headId) throws MathExternModelRecognitionException
     {
@@ -41,44 +45,11 @@ public class MathExternModelMapper
             if (!names.hasNext()) throw new MathExternModelRecognitionException("Model entity not found.");
             var entry = names.next();
 
-            return objectMapper.treeToValue(entry.getValue(), modelEntities.getEntityForName(entry.getKey()).getClazz());
+            return objectMapper.treeToValue(entry.getValue(), getEntityForName(entry.getKey()));
         }
         catch (MathExternModelRecognitionException | JsonProcessingException e)
         {
             throw new MathExternModelRecognitionException(e);
         }
-    }
-
-
-    public static class ModelEntities
-    {
-        private final Map<String, ModelEntity> entities;
-
-        public ModelEntities(MathExternModelMapperConfig config) throws ClassNotFoundException
-        {
-            entities = new HashMap<>();
-
-            for (var entityConfig : config.getEntitiesConfig().getEntitiesList())
-            {
-                var modelEntity = new ModelEntity(entityConfig);
-                var jsonName = modelEntity.clazz.getAnnotationsByType(JsonRootName.class)[0].value();
-
-                entities.put(jsonName, modelEntity);
-            }
-        }
-
-        public ModelEntity getEntityForName(String name) { return entities.get(name); }
-    }
-
-    public static class ModelEntity
-    {
-        private final Class<?> clazz;
-
-        public ModelEntity(MathExternModelMapperConfig.EntityConfig config) throws ClassNotFoundException
-        {
-            clazz = Class.forName(config.getClassPath());
-        }
-
-        public Class<?> getClazz() { return clazz; }
     }
 }

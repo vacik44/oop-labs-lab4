@@ -2,6 +2,7 @@ package oop.labs.lab4;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+@SuppressWarnings("unused")
 @ConfigurationProperties(prefix = "app")
 public class MathSolverProperties
 {
@@ -26,24 +27,40 @@ public class MathSolverProperties
 
             public static class ModelProperties
             {
-                private String externMapperCfgPath;
+                private ExternProperties extern;
 
-                public String getExternMapperCfgPath() { return externMapperCfgPath; }
-                public void setExternMapperCfgPath(String externMapperCfgPath) { this.externMapperCfgPath = externMapperCfgPath; }
+                public ExternProperties getExternProperties() { return extern; }
+                public void setExternProperties(ExternProperties extern) { this.extern = extern; }
+
+                public static class ExternProperties
+                {
+                    private String mapFilePath;
+
+                    public String getMapFilePath() { return mapFilePath; }
+                    public void setMapFilePath(String mapFilePath) { this.mapFilePath = mapFilePath; }
+                }
             }
 
 
-            private SolversProperties solvers;
+            private EvaluationProperties eval;
 
-            public SolversProperties getSolversProperties() { return solvers; }
-            public void setSolversProperties(SolversProperties solvers) { this.solvers = solvers; }
+            public EvaluationProperties getEvaluationProperties() { return eval; }
+            public void setEvaluationProperties(EvaluationProperties eval) { this.eval = eval; }
 
-            public static class SolversProperties
+            public static class EvaluationProperties
             {
-                private String mapperCfgPath;
+                private SolversProperties solvers;
 
-                public String getMapperCfgPath() { return mapperCfgPath; }
-                public void setMapperCfgPath(String mapperCfgPath) { this.mapperCfgPath = mapperCfgPath; }
+                public SolversProperties getSolversProperties() { return solvers; }
+                public void setSolversProperties(SolversProperties solvers) { this.solvers = solvers; }
+
+                public static class SolversProperties
+                {
+                    private String mapFilePath;
+
+                    public String getMapFilePath() { return mapFilePath; }
+                    public void setMapFilePath(String mapFilePath) { this.mapFilePath = mapFilePath; }
+                }
             }
         }
     }

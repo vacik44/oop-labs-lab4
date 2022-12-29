@@ -1,4 +1,6 @@
-package oop.labs.lab4.service.math.solvers;
+package oop.labs.lab4.service.math.eval.solvers;
+
+import oop.labs.lab4.service.math.eval.Solver;
 
 public class QuadraticFormSignificanceSolver implements Solver
 {

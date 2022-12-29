@@ -1,0 +1,14 @@
+app:
+    data:
+        repos:
+            repository-path: calculations
+
+    service:
+        math:
+            model:
+                extern:
+                    map-file-path: build/resources/main/application.service.math.model.extern.map.yml
+
+            eval:
+                solvers:
+                    map-file-path: build/resources/main/application.service.math.eval.solvers.map.yml

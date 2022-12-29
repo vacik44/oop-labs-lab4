@@ -1,4 +1,4 @@
-package oop.labs.lab4.service.math.solvers;
+package oop.labs.lab4.service.math.eval;
 
 public interface Solver
 {

@@ -1,16 +1,16 @@
 package oop.labs.lab4.service;
 
-import oop.labs.lab4.service.math.MathSolversMapper;
+import oop.labs.lab4.service.math.MathEvaluationMapper;
 import org.springframework.beans.BeansException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CalculationsProvider
 {
-    private final MathSolversMapper solvers;
+    private final MathEvaluationMapper solvers;
 
 
-    CalculationsProvider(MathSolversMapper solvers)
+    CalculationsProvider(MathEvaluationMapper solvers)
     {
         this.solvers = solvers;
     }
