@@ -49,7 +49,7 @@ public final class NumMatrixImmutable extends NumMatrix
         super(makeImmutable(buildMatrix(source)));
     }
 
-    public NumMatrixImmutable(NumericMatrix other)
+    public NumMatrixImmutable(MatrixNumeric other)
     {
         super(makeImmutable(buildMatrix(other)));
     }
@@ -67,7 +67,7 @@ public final class NumMatrixImmutable extends NumMatrix
 
 
     @Override
-    public NumericMatrix dot(NumericMatrix other)
+    public NumMatrixImmutable dot(MatrixNumeric other)
     {
         return NumMatrixImmutable.instance(buildDotSource(other));
     }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.util.*;
 
-public abstract class NumMatrix implements NumericMatrix
+public abstract class NumMatrix implements MatrixNumeric
 {
     @JsonProperty("elements")
     protected final List<List<BigDecimal>> elements;
@@ -101,7 +101,7 @@ public abstract class NumMatrix implements NumericMatrix
         return matrix;
     }
 
-    protected static List<List<BigDecimal>> buildMatrix(NumericMatrix other)
+    protected static List<List<BigDecimal>> buildMatrix(MatrixNumeric other)
     {
         var matrix = new ArrayList<List<BigDecimal>>(other.rows());
 
@@ -164,7 +164,7 @@ public abstract class NumMatrix implements NumericMatrix
     }
 
 
-    protected List<List<BigDecimal>> buildDotSource(NumericMatrix other)
+    protected List<List<BigDecimal>> buildDotSource(MatrixNumeric other)
     {
         if (this.cols() != other.rows()) throw new IllegalArgumentException("Operands sizes mismatch. Unable to multiply");
 

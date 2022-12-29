@@ -44,7 +44,7 @@ public class NumMatrixMutable extends NumMatrix
         super(buildMatrix(source));
     }
 
-    public NumMatrixMutable(NumericMatrix other)
+    public NumMatrixMutable(MatrixNumeric other)
     {
         super(buildMatrix(other));
     }
@@ -65,7 +65,7 @@ public class NumMatrixMutable extends NumMatrix
 
 
     @Override
-    public Matrix<BigDecimal> fillRow(int index, Iterable<BigDecimal> source)
+    public NumMatrixMutable fillRow(int index, Iterable<BigDecimal> source)
     {
         var row = elements.get(index - 1);
 
@@ -80,7 +80,7 @@ public class NumMatrixMutable extends NumMatrix
     }
 
     @Override
-    public Matrix<BigDecimal> fillCol(int index, Iterable<BigDecimal> source)
+    public NumMatrixMutable fillCol(int index, Iterable<BigDecimal> source)
     {
         var i = 0;
         var c = index - 1;
@@ -96,7 +96,7 @@ public class NumMatrixMutable extends NumMatrix
 
 
     @Override
-    public Matrix<BigDecimal> fillRow(int index, BigDecimal[] source)
+    public NumMatrixMutable fillRow(int index, BigDecimal[] source)
     {
         var row = elements.get(index - 1);
 
@@ -111,7 +111,7 @@ public class NumMatrixMutable extends NumMatrix
     }
 
     @Override
-    public Matrix<BigDecimal> fillCol(int index, BigDecimal[] source)
+    public NumMatrixMutable fillCol(int index, BigDecimal[] source)
     {
         var i = 0;
         var c = index - 1;
@@ -128,7 +128,7 @@ public class NumMatrixMutable extends NumMatrix
 
     @Override
     @SuppressWarnings("DuplicatedCode")
-    public Matrix<BigDecimal> fill(BigDecimal[][] source)
+    public NumMatrixMutable fill(BigDecimal[][] source)
     {
         var i = 0;
 
@@ -151,7 +151,7 @@ public class NumMatrixMutable extends NumMatrix
 
     @Override
     @SuppressWarnings("DuplicatedCode")
-    public <TRow extends Iterable<BigDecimal>> Matrix<BigDecimal> fill(Iterable<TRow> source)
+    public <TRow extends Iterable<BigDecimal>> NumMatrixMutable fill(Iterable<TRow> source)
     {
         var i = 0;
 
@@ -174,7 +174,7 @@ public class NumMatrixMutable extends NumMatrix
 
 
     @Override
-    public NumericMatrix dot(NumericMatrix other)
+    public NumMatrixMutable dot(MatrixNumeric other)
     {
         return NumMatrixMutable.instance(buildDotSource(other));
     }
