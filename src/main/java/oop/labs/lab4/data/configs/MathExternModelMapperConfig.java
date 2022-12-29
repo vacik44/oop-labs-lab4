@@ -16,21 +16,20 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class MathModelMapperConfig
+public class MathExternModelMapperConfig
 {
     private final EntitiesConfig entitiesConfig;
     public EntitiesConfig getEntitiesConfig() { return entitiesConfig; }
 
 
     @Autowired
-    MathModelMapperConfig(@Value("${app.data.cfg.math.model.mapper-cfg-path}") String path)
+    MathExternModelMapperConfig(@Value("${app.service.math.model.extern-mapper-cfg-path}") String path)
     {
         try
         {
             XmlMapper mapper = new XmlMapper();
             XMLStreamReader reader = XMLInputFactory.newFactory().createXMLStreamReader(new FileInputStream(path));
             entitiesConfig = mapper.readValue(reader, EntitiesConfig.class);
-            System.out.println("success");
         }
         catch (XMLStreamException | IOException e)
         {

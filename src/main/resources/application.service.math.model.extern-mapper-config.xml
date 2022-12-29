@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities>
+
+    <entity class-path="oop.labs.lab4.service.math.model.NumMatrixImmutable"/>
+    <entity class-path="oop.labs.lab4.service.math.model.Polynomial"/>
+
+</entities>

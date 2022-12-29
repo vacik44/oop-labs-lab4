@@ -1,8 +1,15 @@
 package oop.labs.lab4.service.math.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 import java.math.BigDecimal;
 import java.util.List;
 
+@JsonRootName("numMatrix")
+@JsonIncludeProperties("elements")
 public class NumMatrixMutable extends NumMatrix
 {
     public NumMatrixMutable()
@@ -11,7 +18,13 @@ public class NumMatrixMutable extends NumMatrix
     }
 
 
-    protected NumMatrixMutable(boolean ignored, List<List<BigDecimal>> elements)
+    @JsonCreator
+    protected static NumMatrixMutable instance(@JsonProperty("elements") List<List<BigDecimal>> elements)
+    {
+        return new NumMatrixMutable(elements, false);
+    }
+
+    protected NumMatrixMutable(List<List<BigDecimal>> elements, boolean ignored)
     {
         super(elements);
     }
@@ -40,7 +53,7 @@ public class NumMatrixMutable extends NumMatrix
 
     public static NumMatrixMutable eye(int size)
     {
-        return new NumMatrixMutable(false, buildIdentityMatrix(size));
+        return NumMatrixMutable.instance(buildIdentityMatrix(size));
     }
 
 
@@ -164,6 +177,6 @@ public class NumMatrixMutable extends NumMatrix
     @Override
     public NumericMatrix dot(NumericMatrix other)
     {
-        return new NumMatrixMutable(false, buildDotSource(other));
+        return NumMatrixMutable.instance(buildDotSource(other));
     }
 }

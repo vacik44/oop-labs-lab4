@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import oop.labs.lab4.data.configs.MathModelMapperConfig;
+import oop.labs.lab4.data.configs.MathExternModelMapperConfig;
+import oop.labs.lab4.service.math.exceptions.MathExternModelRecognitionException;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class MathModelExternMapper
+public class MathExternModelMapper
 {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -19,7 +20,7 @@ public class MathModelExternMapper
     public ModelEntities getModelEntities() { return modelEntities; }
 
 
-    MathModelExternMapper(MathModelMapperConfig config)
+    MathExternModelMapper(MathExternModelMapperConfig config)
     {
         try
         {
@@ -32,19 +33,19 @@ public class MathModelExternMapper
     }
 
 
-    public Object parseJsonEntity(JsonNode jsonEntity, String headId) throws MathModelRecognitionException
+    public Object json2Entity(JsonNode jsonEntity, String headId) throws MathExternModelRecognitionException
     {
         try
         {
             var names = jsonEntity.get(headId).fields();
-            if (!names.hasNext()) throw new MathModelRecognitionException("Model entity not found.");
+            if (!names.hasNext()) throw new MathExternModelRecognitionException("Model entity not found.");
             var entry = names.next();
 
             return objectMapper.treeToValue(entry.getValue(), modelEntities.getEntityForName(entry.getKey()).getClazz());
         }
-        catch (MathModelRecognitionException | JsonProcessingException e)
+        catch (MathExternModelRecognitionException | JsonProcessingException e)
         {
-            throw new MathModelRecognitionException(e);
+            throw new MathExternModelRecognitionException(e);
         }
     }
 
@@ -53,7 +54,7 @@ public class MathModelExternMapper
     {
         private final Map<String, ModelEntity> entities;
 
-        public ModelEntities(MathModelMapperConfig config) throws ClassNotFoundException
+        public ModelEntities(MathExternModelMapperConfig config) throws ClassNotFoundException
         {
             entities = new HashMap<>();
 
@@ -73,7 +74,7 @@ public class MathModelExternMapper
     {
         private final Class<?> clazz;
 
-        public ModelEntity(MathModelMapperConfig.EntityConfig config) throws ClassNotFoundException
+        public ModelEntity(MathExternModelMapperConfig.EntityConfig config) throws ClassNotFoundException
         {
             clazz = Class.forName(config.getClassPath());
         }

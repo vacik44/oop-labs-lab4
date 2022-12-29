@@ -1,30 +1,27 @@
 package oop.labs.lab4.service;
 
-import oop.labs.lab4.data.repos.CalculationsRepository;
+import oop.labs.lab4.service.math.MathSolversMapper;
 import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CalculationsProvider
 {
-    private final ApplicationContext solvers;
-    private final CalculationsRepository repository;
+    private final MathSolversMapper solvers;
 
 
-    CalculationsProvider(CalculationsRepository repository)
+    CalculationsProvider(MathSolversMapper solvers)
     {
-        this.repository = repository;
-        this.solvers = new ClassPathXmlApplicationContext("math.solvers.xml");
+        this.solvers = solvers;
     }
 
-    public String submitCalculation(String solverId, Object condition)
+    public Object submitCalculation(String solverId, Object condition)
     {
         try
         {
             System.out.println("Hello from CalculationsProvider");
-            var solver = solvers.getBean(solverId);
+            var solver = solvers.getSolver(solverId);
+            return solver.GetSolution(condition);
         }
         catch (BeansException exception)
         {
@@ -32,5 +29,4 @@ public class CalculationsProvider
         }
         return null;
     }
-
 }

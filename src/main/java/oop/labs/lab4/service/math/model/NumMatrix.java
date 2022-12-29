@@ -1,10 +1,13 @@
 package oop.labs.lab4.service.math.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.*;
 
 public abstract class NumMatrix implements NumericMatrix
 {
+    @JsonProperty("elements")
     protected final List<List<BigDecimal>> elements;
 
 
