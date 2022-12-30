@@ -1,13 +1,14 @@
 package oop.labs.lab4.math.eval.solvers;
 
+import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
 
+@SuppressWarnings("unused")
 public class QuadraticFormSignificanceSolver implements Solver
 {
     @Override
-    public Object GetSolution(Object condition)
+    public SolutionNode GetSolution(Object condition)
     {
-        System.out.println("Hello from solver");
         return null;
     }
 }

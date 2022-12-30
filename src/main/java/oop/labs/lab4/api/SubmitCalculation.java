@@ -2,9 +2,9 @@ package oop.labs.lab4.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import oop.labs.lab4.service.mapping.MappingException;
 import oop.labs.lab4.service.providers.CalculationsProvider;
 import oop.labs.lab4.service.mapping.MathObjectsMapper;
-import oop.labs.lab4.math.exceptions.MathExternModelRecognitionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +39,7 @@ public class SubmitCalculation
             var mathData = modelMapper.json2Entity(jsonMapper.readTree(payload), "condition");
             return ResponseEntity.status(HttpStatus.OK).body(submitter.submitCalculation(solverId, mathData).toString());
         }
-        catch (NullPointerException | JsonProcessingException | MathExternModelRecognitionException e)
+        catch (NullPointerException | JsonProcessingException | MappingException e)
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

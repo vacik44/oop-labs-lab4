@@ -1,6 +1,14 @@
 package oop.labs.lab4.math.eval.solvers;
 
-public class MatrixDeterminantSolver
-{
+import oop.labs.lab4.math.eval.SolutionNode;
+import oop.labs.lab4.math.eval.Solver;
 
+@SuppressWarnings("unused")
+public class MatrixDeterminantSolver implements Solver
+{
+    @Override
+    public SolutionNode GetSolution(Object condition)
+    {
+        return null;
+    }
 }

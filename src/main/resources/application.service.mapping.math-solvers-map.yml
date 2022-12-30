@@ -1,3 +1,7 @@
 classes:
+    - id: lu-factorization-solver
+      class: oop.labs.lab4.math.eval.solvers.LUFactorizationSolver
+    - id: matrix-determinant-solver
+      class: oop.labs.lab4.math.eval.solvers.MatrixDeterminantSolver
     - id: quadratic-form-significance-solver
-      class: oop.labs.lab4.service.math.eval.solvers.QuadraticFormSignificanceSolver
+      class: oop.labs.lab4.math.eval.solvers.QuadraticFormSignificanceSolver
