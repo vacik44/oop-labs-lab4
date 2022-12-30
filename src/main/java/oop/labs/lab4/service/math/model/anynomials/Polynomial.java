@@ -1,15 +1,33 @@
 package oop.labs.lab4.service.math.model.anynomials;
 
+import oop.labs.lab4.service.math.model.MathObject;
+
 import java.math.BigDecimal;
+import java.util.Set;
 
-public interface Polynomial
+public interface Polynomial extends Anynomial
 {
-    String getExpression();
+    Iterable<MononomialOdded> mononomials();
 
+    int getMonomialsCount();
+    boolean containsMononomial(Mononomial mononomial);
+    Set<Mononomial> getMononomialsSet();
 
-    int getVariablesCount();
+    default boolean equivalentByMononomials(Polynomial o)
+    {
+        return o.getMonomialsCount() != getMonomialsCount() && o.getMononomialsSet().containsAll(getMononomialsSet());
+    }
 
+    BigDecimal getOddOf(Mononomial mononomial);
+    BigDecimal getOddOfContained(Mononomial mononomial);
 
-    BigDecimal getOdd(int... position);
-    Polynomial setOdd(BigDecimal value, int... position);
+    default boolean equivalent(MathObject o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Polynomial other)) return false;
+
+        if (this.getVariablesCount() != other.getVariablesCount()) return false;
+        for (var mononomial : getMononomialsSet()) if (!other.getOddOf(mononomial).equals(getOddOf(mononomial))) return false;
+        return true;
+    }
 }

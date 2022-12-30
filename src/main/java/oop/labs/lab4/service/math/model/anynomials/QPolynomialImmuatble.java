@@ -8,7 +8,7 @@ import oop.labs.lab4.service.math.model.matrix.NumMatrixImmutable;
 
 import java.math.BigDecimal;
 
-@JsonRootName("polynomial")
+/*@JsonRootName("polynomial")
 public final class QPolynomialImmuatble extends QPolynomial
 {
     public QPolynomialImmuatble(MatrixNumeric odds)
@@ -29,4 +29,4 @@ public final class QPolynomialImmuatble extends QPolynomial
 
 
     @Override public Polynomial setOdd(BigDecimal value, int... position) { throw new UnsupportedOperationException(); }
-}
+}*/

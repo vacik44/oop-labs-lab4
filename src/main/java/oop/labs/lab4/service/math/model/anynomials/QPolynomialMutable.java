@@ -7,7 +7,7 @@ import oop.labs.lab4.service.math.model.matrix.NumMatrixMutable;
 
 import java.math.BigDecimal;
 
-public class QPolynomialMutable extends QPolynomial
+/*public class QPolynomialMutable extends QPolynomial
 {
     public QPolynomialMutable(MatrixNumeric odds)
     {
@@ -35,4 +35,4 @@ public class QPolynomialMutable extends QPolynomial
         }
         else throw new IllegalArgumentException("Incorrect number of coordinates for quadratic polynomial");
     }
-}
+}*/

@@ -34,22 +34,22 @@ public class NumMatrixMutable extends NumMatrix
 
     public NumMatrixMutable(int rows, int cols, BigDecimal init)
     {
-        super(buildMatrix(rows, cols, init));
+        this(buildMatrix(rows, cols, init), false);
     }
 
     public NumMatrixMutable(BigDecimal[][] matrix)
     {
-        super(buildMatrix(matrix));
+        this(buildMatrix(matrix), false);
     }
 
     public <TRow extends Iterable<BigDecimal>> NumMatrixMutable(Iterable<TRow> source)
     {
-        super(buildMatrix(source));
+        this(buildMatrix(source), false);
     }
 
     public NumMatrixMutable(MatrixNumeric other)
     {
-        super(buildMatrix(other));
+        this(buildMatrix(other), false);
     }
 
 

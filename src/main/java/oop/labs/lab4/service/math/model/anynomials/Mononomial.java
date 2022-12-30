@@ -6,12 +6,18 @@ import oop.labs.lab4.service.math.model.simplets.VariableDefinition;
 
 import java.math.BigDecimal;
 
-public interface Mononomial extends MathObject, MathExpressionable
+public interface Mononomial extends Anynomial
 {
-    BigDecimal getOdd();
+    Integer getPowerOfContained(VariableDefinition variable);
+    Integer getPowerOf(VariableDefinition variable);
 
-    boolean contains(VariableDefinition variable);
+    default boolean equivalent(MathObject o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Mononomial other)) return false;
 
-    int powerOfContained(VariableDefinition variable);
-    int powerOf(VariableDefinition variable);
+        if (this.getVariablesCount() != other.getVariablesCount()) return false;
+        for (var variable : getVariablesSet()) if (!other.getPowerOf(variable).equals(getPowerOf(variable))) return false;
+        return true;
+    }
 }

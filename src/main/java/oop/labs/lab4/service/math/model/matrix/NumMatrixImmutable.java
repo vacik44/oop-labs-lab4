@@ -34,27 +34,27 @@ public final class NumMatrixImmutable extends NumMatrix
 
     public NumMatrixImmutable()
     {
-        super(makeImmutable(buildMatrix()));
+        this(buildMatrix(), false);
     }
 
     public NumMatrixImmutable(int rows, int cols, BigDecimal init)
     {
-        super(makeImmutable(buildMatrix(rows, cols, init)));
+        this(buildMatrix(rows, cols, init), false);
     }
 
     public NumMatrixImmutable(BigDecimal[][] matrix)
     {
-        super(makeImmutable(buildMatrix(matrix)));
+        this(buildMatrix(matrix), false);
     }
 
     public <TRow extends Iterable<BigDecimal>> NumMatrixImmutable(Iterable<TRow> source)
     {
-        super(makeImmutable(buildMatrix(source)));
+        this(buildMatrix(source), false);
     }
 
     public NumMatrixImmutable(MatrixNumeric other)
     {
-        super(makeImmutable(buildMatrix(other)));
+        this(buildMatrix(other), false);
     }
 
 

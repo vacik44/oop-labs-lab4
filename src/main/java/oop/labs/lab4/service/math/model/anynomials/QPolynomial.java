@@ -19,7 +19,7 @@ public abstract class QPolynomial implements PolynomialQuadratic
     @Override public int getVariablesCount() { return odds.rows(); }
     @Override public MatrixNumeric getOdds() { return odds; }
 
-    @Override public BigDecimal getOdd(int... position)
+    public BigDecimal getOdd(int... position)
     {
         if (position.length == 2) return odds.get(position[0], position[1]);
         throw new IllegalArgumentException("Incorrect number of coordinates for quadratic polynomial");

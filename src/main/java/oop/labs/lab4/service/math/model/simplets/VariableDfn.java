@@ -2,7 +2,10 @@ package oop.labs.lab4.service.math.model.simplets;
 
 import oop.labs.lab4.service.math.model.MathObject;
 import oop.labs.lab4.service.math.parse.MathParser;
-import oop.labs.lab4.service.math.parse.MathParserSource;
+import oop.labs.lab4.service.math.parse.ParsingSource;
+import oop.labs.lab4.service.math.parse.ParsingSourceIterator;
+
+import java.text.ParseException;
 import java.util.Objects;
 
 
@@ -63,53 +66,34 @@ public final class VariableDfn implements VariableDefinition
     public VariableDfn(String name) { this(name, null, null); }
 
 
-    public static VariableDfn parse(String source) { return parse(new MathParserSource(source)); }
-    public static VariableDfn parse(MathParserSource source)
+    public static VariableDfn parse(String source) throws ParseException { return parse(new ParsingSource(source)); }
+    public static VariableDfn parse(ParsingSourceIterator source) throws ParseException
     {
+        String name = MathParser.parseAlpha(source);
+        if (name == null) return null;
+
+
+        Integer index = null;
         var hasIndex = false;
+
+        String subName = null;
         var hasSubName = false;
 
-        String name;
-        Integer index = null;
-        String subName = null;
 
+        if (source.hasCurrent())
         {
-            var nameBuilder = new StringBuilder();
+            if (source.current() == '#') hasSubName = true;
+            else if (Character.isDigit(source.current())) hasIndex = true;
 
-            while(source.getRemindLength() > 0)
+            if (hasSubName)
             {
-                var c = source.getRemindHead();
-
-                if (Character.isAlphabetic(c)) { nameBuilder.append(c); source.moveNext(); continue; }
-                else if (c == '#') { hasSubName = true; source.moveNext(); }
-                else if (Character.isDigit(c)) hasIndex = true;
-                break;
+                source.move();
+                subName = MathParser.parseAlpha(source);
+                if (subName == null) throw source.createException();
+                if (source.hasCurrent() && Character.isDigit(source.current())) hasIndex = true;
             }
 
-            name = nameBuilder.toString();
-        }
-
-        if (hasSubName)
-        {
-            var subNameBuilder = new StringBuilder();
-
-            while(source.getRemindLength() > 0)
-            {
-                var c = source.getRemindHead();
-
-                if (Character.isAlphabetic(c)) { subNameBuilder.append(c); source.moveNext(); continue; }
-                if (Character.isDigit(c)) hasIndex = true;
-                break;
-            }
-
-            subName = subNameBuilder.toString();
-        }
-
-        if (hasIndex)
-        {
-            var branch = source.newBranch();
-            index = MathParser.parseInt(branch);
-            source.pull(branch);
+            if (hasIndex) index = MathParser.parseUInt(source);
         }
 
         return new VariableDfn(name, subName, index);
