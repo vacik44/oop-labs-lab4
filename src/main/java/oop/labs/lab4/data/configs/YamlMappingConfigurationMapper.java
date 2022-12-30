@@ -10,7 +10,7 @@ import java.io.IOException;
 @Repository
 public class YamlMappingConfigurationMapper
 {
-    ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+    final ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
 
     public MappingConfiguration readMappingConfiguration(String configPath) throws IOException
     {

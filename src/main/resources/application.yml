@@ -4,11 +4,6 @@ app:
             repository-path: calculations
 
     service:
-        math:
-            model:
-                extern:
-                    map-file-path: build/resources/main/application.service.math.model.extern.map.yml
-
-            eval:
-                solvers:
-                    map-file-path: build/resources/main/application.service.math.eval.solvers.map.yml
+        mapping:
+            math-obj-map-file-path: build/resources/main/application.service.mapping.math-obj-map.yml
+            math-solvers-map-file-path: build/resources/main/application.service.mapping.math-solvers-map.yml

@@ -2,9 +2,9 @@ package oop.labs.lab4.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import oop.labs.lab4.service.CalculationsProvider;
-import oop.labs.lab4.service.math.MathExternModelMapper;
-import oop.labs.lab4.service.math.exceptions.MathExternModelRecognitionException;
+import oop.labs.lab4.service.providers.CalculationsProvider;
+import oop.labs.lab4.service.mapping.MathObjectsMapper;
+import oop.labs.lab4.math.exceptions.MathExternModelRecognitionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class SubmitCalculation
 {
     private final JsonMapper jsonMapper = new JsonMapper();
-    private final MathExternModelMapper modelMapper;
+    private final MathObjectsMapper modelMapper;
 
     private final CalculationsProvider submitter;
 
 
-    SubmitCalculation(CalculationsProvider submitter, MathExternModelMapper modelMapper)
+    SubmitCalculation(CalculationsProvider submitter, MathObjectsMapper modelMapper)
     {
         this.submitter = submitter;
         this.modelMapper = modelMapper;
