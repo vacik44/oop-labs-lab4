@@ -1,4 +1,4 @@
-package oop.labs.lab4.service.math.model;
+package oop.labs.lab4.service.math.model.matrix;
 
 import com.fasterxml.jackson.annotation.*;
 
@@ -10,6 +10,9 @@ import java.util.List;
 @JsonIncludeProperties({"elements"})
 public final class NumMatrixImmutable extends NumMatrix
 {
+    @Override public boolean isImmutable() { return true; }
+
+
     private static List<List<BigDecimal>> makeImmutable(List<List<BigDecimal>> matrix)
     {
         matrix.replaceAll(Collections::unmodifiableList);

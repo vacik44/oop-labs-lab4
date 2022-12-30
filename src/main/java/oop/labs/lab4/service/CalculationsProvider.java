@@ -3,7 +3,6 @@ package oop.labs.lab4.service;
 import oop.labs.lab4.service.math.MathEvaluationMapper;
 import org.springframework.beans.BeansException;
 import org.springframework.stereotype.Service;
-
 @Service
 public class CalculationsProvider
 {

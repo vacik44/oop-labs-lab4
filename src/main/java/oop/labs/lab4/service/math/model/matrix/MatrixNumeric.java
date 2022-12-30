@@ -1,4 +1,4 @@
-package oop.labs.lab4.service.math.model;
+package oop.labs.lab4.service.math.model.matrix;
 
 import java.math.BigDecimal;
 

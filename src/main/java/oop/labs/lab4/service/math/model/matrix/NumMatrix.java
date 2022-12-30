@@ -1,6 +1,7 @@
-package oop.labs.lab4.service.math.model;
+package oop.labs.lab4.service.math.model.matrix;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import oop.labs.lab4.service.math.model.MathObject;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -12,10 +13,28 @@ public abstract class NumMatrix implements MatrixNumeric
 
 
     @Override
+    public boolean equivalent(MathObject o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Matrix<?> other)) return false;
+
+        if (!Arrays.equals(size(), other.size())) return false;
+        for (var i = 1; i <= rows(); i++)
+            for (var j = 1; j <= cols(); j++)
+                if (!other.get(i, j).equals(get(i, j)))
+                    return false;
+
+        return true;
+    }
+
+    @Override
     public boolean equals(Object o)
     {
         if (this == o) return true;
-        if (!(o instanceof NumMatrix numMatrix)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NumMatrix numMatrix = (NumMatrix) o;
+
         return elements.equals(numMatrix.elements);
     }
 

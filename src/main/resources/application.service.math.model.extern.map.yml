@@ -1,2 +1,2 @@
 classes:
-    - class: oop.labs.lab4.service.math.model.NumMatrixImmutable
+    - class: oop.labs.lab4.service.math.model.matrix.NumMatrixImmutable

@@ -1,6 +1,8 @@
-package oop.labs.lab4.service.math.model;
+package oop.labs.lab4.service.math.model.matrix;
 
-public interface Matrix<TElement>
+import oop.labs.lab4.service.math.model.MathObject;
+
+public interface Matrix<TElement> extends MathObject
 {
     int[] size();
 

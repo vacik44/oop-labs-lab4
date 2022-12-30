@@ -1,4 +1,4 @@
-package oop.labs.lab4.service.math.model;
+package oop.labs.lab4.service.math.model.matrix;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
@@ -11,6 +11,9 @@ import java.util.List;
 @JsonIncludeProperties("elements")
 public class NumMatrixMutable extends NumMatrix
 {
+    @Override public boolean isImmutable() { return false; }
+
+
     public NumMatrixMutable()
     {
         super(buildMatrix());

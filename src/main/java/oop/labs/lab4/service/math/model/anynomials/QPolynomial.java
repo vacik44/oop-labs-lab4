@@ -1,13 +1,12 @@
-package oop.labs.lab4.service.math.model;
+package oop.labs.lab4.service.math.model.anynomials;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import oop.labs.lab4.service.math.model.matrix.MatrixNumeric;
 
 import java.math.BigDecimal;
 
 public abstract class QPolynomial implements PolynomialQuadratic
 {
-    @JsonProperty("odds")
     protected final MatrixNumeric odds;
 
 
@@ -43,7 +42,9 @@ public abstract class QPolynomial implements PolynomialQuadratic
             for (var j = 1; j <= odds.cols(); j++)
             {
                 var odd = odds.get(i, j);
-                builder.append(odd.signum() < 0 || builder.isEmpty() ? odd.toString() : "+".concat(odd.toString()));
+                if (odd.equals(BigDecimal.ZERO)) continue;
+                if (odd.signum() >= 0 && !builder.isEmpty()) builder.append('+');
+                if (!odd.equals(BigDecimal.ONE)) builder.append(odd);
                 builder.append('x').append(i).append(i == j ? "^2" : String.format("x%d", j));
             }
 

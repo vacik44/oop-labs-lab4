@@ -1,16 +1,22 @@
-package oop.labs.lab4.service.math.model;
+package oop.labs.lab4.service.math.model.anynomials;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import oop.labs.lab4.service.math.model.matrix.MatrixNumeric;
+import oop.labs.lab4.service.math.model.matrix.NumMatrixImmutable;
 
 import java.math.BigDecimal;
 
 @JsonRootName("polynomial")
 public final class QPolynomialImmuatble extends QPolynomial
 {
-    @JsonCreator
-    private QPolynomialImmuatble(@JsonProperty("odds") MatrixNumeric odds)
+    public QPolynomialImmuatble(MatrixNumeric odds)
+    {
+        this(new NumMatrixImmutable(odds));
+    }
+
+    public QPolynomialImmuatble(NumMatrixImmutable odds)
     {
         super(odds);
     }
