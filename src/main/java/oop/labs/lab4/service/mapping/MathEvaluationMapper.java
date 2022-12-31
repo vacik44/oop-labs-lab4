@@ -1,31 +1,25 @@
 package oop.labs.lab4.service.mapping;
 
-import oop.labs.lab4.data.configs.MappingConfiguration;
 import oop.labs.lab4.math.eval.Solver;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.StaticApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MathEvaluationMapper
 {
-    private final ApplicationContext solverBeans;
+    private final ApplicationContext evaluationContext;
 
 
-    public MathEvaluationMapper(@Qualifier("MathSolversMappingConfiguration") MappingConfiguration configuration) throws ClassNotFoundException
+    public MathEvaluationMapper(@Value("${app.service.mapping.math-solvers-beans-xml-path}") String xmlConfigPath)
     {
-        var context = new StaticApplicationContext();
-
-        for (var clazz : configuration.getClasses())
-            context.registerSingleton(clazz.getId(), clazz.getClazz());
-
-        solverBeans = context;
+        evaluationContext = new FileSystemXmlApplicationContext(xmlConfigPath);
     }
 
 
     public Solver getSolver(String id)
     {
-        return solverBeans.getBean(id + "-solver", Solver.class);
+        return evaluationContext.getBean(id + "-solver", Solver.class);
     }
 }

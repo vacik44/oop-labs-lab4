@@ -27,10 +27,10 @@ public class ApplicationProperties
             public void setMathObjMapFilePath(String mathObjMapFilePath) { this.mathObjMapFilePath = mathObjMapFilePath; }
 
 
-            private String mathSolversMapFilePath;
+            private String mathSolversBeansXmlPath;
 
-            public String getMathSolversMapFilePath() { return mathSolversMapFilePath; }
-            public void setMathSolversMapFilePath(String mathSolversMapFilePath) { this.mathSolversMapFilePath = mathSolversMapFilePath; }
+            public String getMathSolversBeansXmlPath() { return mathSolversBeansXmlPath; }
+            public void setMathSolversBeansXmlPath(String mathSolversBeansXmlPath) { this.mathSolversBeansXmlPath = mathSolversBeansXmlPath; }
         }
     }
 

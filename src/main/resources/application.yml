@@ -5,5 +5,5 @@ app:
 
     service:
         mapping:
+            math-solvers-beans-xml-path: build/resources/main/application.service.mapping.math-solvers-beans.xml
             math-obj-map-file-path: build/resources/main/application.service.mapping.math-obj-map.yml
-            math-solvers-map-file-path: build/resources/main/application.service.mapping.math-solvers-map.yml

@@ -1,71 +1,53 @@
 package oop.labs.lab4.math.eval;
 
-import oop.labs.lab4.math.model.MathObject;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import java.util.*;
 
-@SuppressWarnings("unused")
+@JsonRootName("solutionNode")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public final class SolutionNode implements List<SolutionNode>
 {
-    private String comment;
-    private Object content;
+    @JsonProperty("comment") private final String comment;
+    @JsonProperty("content") private final Object content;
 
-    private final List<SolutionNode> subNodes;
+    @JsonProperty("subNodes") private final List<SolutionNode> subNodes;
 
 
     @Override
     public boolean equals(Object o)
     {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SolutionNode that = (SolutionNode) o;
-
-        if (subNodes != null ? !subNodes.equals(that.subNodes) : that.subNodes != null) return false;
-        if (!Objects.equals(comment, that.comment)) return false;
-        return Objects.equals(content, that.content);
+        if (!(o instanceof SolutionNode that)) return false;
+        return Objects.equals(comment, that.comment) && Objects.equals(content, that.content) && subNodes.equals(that.subNodes);
     }
 
     @Override
     public int hashCode()
     {
-        int result = subNodes != null ? subNodes.hashCode() : 0;
-        result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        return result;
+        return Objects.hash(comment, content, subNodes);
     }
 
 
-    public SolutionNode()
+    @JsonCreator
+    private SolutionNode(@JsonProperty("comment") String comment,
+                         @JsonProperty("content") Object content,
+                         @JsonProperty("subNodes") List<SolutionNode> subNodes)
     {
-        this.subNodes = new ArrayList<>();
-    }
-
-    public SolutionNode(int capacity)
-    {
-        this.subNodes = new ArrayList<>(capacity);
-    }
-
-    public SolutionNode(String comment, Object content)
-    {
-        this();
+        this.subNodes = subNodes;
         this.comment = comment;
         this.content = content;
     }
 
-    public SolutionNode(String comment, Object content, int capacity)
-    {
-        this(capacity);
-        this.comment = comment;
-        this.content = content;
-    }
+    public SolutionNode() { this(null, null, new ArrayList<>()); }
+    public SolutionNode(int capacity) { this(null, null, new ArrayList<>(capacity)); }
+    public SolutionNode(String comment, Object content) { this(comment, content, new ArrayList<>()); }
+    public SolutionNode(String comment, Object content, int capacity) { this(comment, content, new ArrayList<>(capacity)); }
 
 
     public String comment() { return comment; }
-    public void setComment(String comment) { this.comment = comment; }
-
     public Object content() { return content; }
-    public void fillContent(MathObject content) { this.content = content; }
 
     public int nodesCount() { return subNodes.size(); }
     @Override public int size() { return nodesCount(); }
@@ -87,7 +69,6 @@ public final class SolutionNode implements List<SolutionNode>
     @Override public SolutionNode set(int index, SolutionNode element) { return setNode(index, element); }
 
     public void clearNodes() { subNodes.clear(); }
-    public void clearInfo() { comment = null; content = null; clearNodes(); }
     @Override public void clear() { clearNodes(); }
 
     public boolean removeNode(SolutionNode node) { return subNodes.remove(node); }
@@ -104,6 +85,10 @@ public final class SolutionNode implements List<SolutionNode>
 
     public void addNode(int index, SolutionNode node) { subNodes.addAll(index, node); }
     @Override public void add(int index, SolutionNode element) { addNode(index, element); }
+
+    public boolean newNode(String comment, Object content, int capacity) { return addNode(new SolutionNode(comment, content, capacity)); }
+    public boolean newNode(String comment, Object content) { return addNode(new SolutionNode(comment, content)); }
+    public boolean newFinalNode(String comment, Object content) { return newNode(comment, content, 0); }
 
     public boolean addNode(SolutionNode node) { return subNodes.add(node); }
     @Override public boolean add(SolutionNode element) { return addNode(element); }

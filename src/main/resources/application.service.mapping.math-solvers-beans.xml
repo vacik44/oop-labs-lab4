@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="lu-decomposition-solver" class="oop.labs.lab4.math.eval.solvers.LUDecompositionSolver"/>
+
+    <bean name="matrix-determinant-solver" class="oop.labs.lab4.math.eval.solvers.MatrixDeterminantSolver">
+        <constructor-arg name="luDecompositionSolver" ref="lu-decomposition-solver"/>
+    </bean>
+
+    <bean name="quadratic-form-significance-solver" class="oop.labs.lab4.math.eval.solvers.QuadraticFormSignificanceSolver">
+        <constructor-arg name="matrixDeterminantSolver" ref="matrix-determinant-solver"/>
+    </bean>
+
+</beans>

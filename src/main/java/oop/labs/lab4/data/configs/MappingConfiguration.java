@@ -12,8 +12,7 @@ import java.util.Optional;
 @JsonRootName("mapConfig")
 public class MappingConfiguration
 {
-    @JsonProperty("classes")
-    private List<ClassMappingConfiguration> classes;
+    @JsonProperty("classes") private List<ClassMappingConfiguration> classes;
 
     @JsonSetter("classes")
     private void setClasses(List<ClassMappingConfiguration> classes) { this.classes = Optional.ofNullable(classes).orElse(new ArrayList<>(0)); }

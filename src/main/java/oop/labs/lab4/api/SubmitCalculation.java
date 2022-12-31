@@ -2,6 +2,7 @@ package oop.labs.lab4.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import oop.labs.lab4.math.MathematicalException;
 import oop.labs.lab4.service.mapping.MappingException;
 import oop.labs.lab4.service.providers.CalculationsProvider;
 import oop.labs.lab4.service.mapping.MathObjectsMapper;
@@ -43,9 +44,13 @@ public class SubmitCalculation
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+        catch (MathematicalException e)
+        {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
         catch (Exception e)
         {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

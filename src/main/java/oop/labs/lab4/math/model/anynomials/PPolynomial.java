@@ -1,5 +1,6 @@
 package oop.labs.lab4.math.model.anynomials;
 
+import com.fasterxml.jackson.annotation.*;
 import oop.labs.lab4.math.model.simplets.VariableDefinition;
 import oop.labs.lab4.math.parse.ParsingSource;
 import oop.labs.lab4.math.parse.ParsingSourceIterator;
@@ -8,6 +9,8 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.*;
 
+@JsonRootName("polynomial")
+@JsonIncludeProperties("expression")
 @SuppressWarnings("unused")
 public final class PPolynomial implements Polynomial
 {
@@ -62,7 +65,7 @@ public final class PPolynomial implements Polynomial
     }
 
 
-    public static PPolynomial parse(String source) throws ParseException { return parse(new ParsingSource(source)); }
+    @JsonCreator public static PPolynomial parse(@JsonProperty("expression") String source) throws ParseException { return parse(new ParsingSource(source)); }
     public static PPolynomial parse(ParsingSourceIterator source) throws ParseException
     {
         var map = new HashMap<Mononomial, BigDecimal>();
@@ -104,6 +107,7 @@ public final class PPolynomial implements Polynomial
 
 
     @Override
+    @JsonGetter("expression")
     public String toExpression()
     {
         var builder = new StringBuilder();

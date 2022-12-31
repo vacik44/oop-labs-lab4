@@ -1,4 +1,4 @@
-package oop.labs.lab4.math.eval;
+package oop.labs.lab4.math.eval.exceptions;
 
 import oop.labs.lab4.math.MathematicalException;
 

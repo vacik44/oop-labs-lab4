@@ -1,1 +1,11 @@
+# Classes list for MathObjectsMapper, provides assist in process of automatic objects parsing
 classes:
+
+    # Mathematical model objects
+    - class: oop.labs.lab4.math.model.matrix.NumMatrixImmutable
+    - class: oop.labs.lab4.math.model.anynomials.PPolynomial
+    - class: oop.labs.lab4.math.model.containers.LU
+
+    # Evaluational containers
+    - class: oop.labs.lab4.math.eval.EvaluationResult
+    - class: oop.labs.lab4.math.eval.SolutionNode

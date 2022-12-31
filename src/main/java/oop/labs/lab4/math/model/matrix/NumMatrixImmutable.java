@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 @JsonRootName("numMatrix")
-@JsonIncludeProperties({"elements"})
+@JsonIncludeProperties("elements")
 @SuppressWarnings("unused")
 public final class NumMatrixImmutable extends NumMatrix
 {

@@ -19,11 +19,4 @@ public class ApplicationConfig
     {
         return configurationMapper.readMappingConfiguration(configPath);
     }
-
-    @Bean(name="MathSolversMappingConfiguration")
-    public MappingConfiguration getMathSolversMapConfiguration(YamlMappingConfigurationMapper configurationMapper,
-            @Value("${app.service.mapping.math-solvers-map-file-path}") String configPath) throws IOException
-    {
-        return configurationMapper.readMappingConfiguration(configPath);
-    }
 }
