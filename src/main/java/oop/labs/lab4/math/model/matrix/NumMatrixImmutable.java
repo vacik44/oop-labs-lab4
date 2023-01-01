@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-@JsonRootName("numMatrix")
+@JsonTypeName("numMatrix")
 @JsonIncludeProperties("elements")
 @SuppressWarnings("unused")
 public final class NumMatrixImmutable extends NumMatrix

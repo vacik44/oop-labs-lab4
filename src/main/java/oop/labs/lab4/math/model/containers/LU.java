@@ -3,6 +3,7 @@ package oop.labs.lab4.math.model.containers;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import oop.labs.lab4.math.model.MathObject;
 import oop.labs.lab4.math.model.matrix.MatrixNumeric;
 
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
-@JsonRootName("LU-factorization")
+@JsonTypeName("decompositionLU")
 public final class LU implements MathObject
 {
     @Override public boolean isImmutable() { return true; }

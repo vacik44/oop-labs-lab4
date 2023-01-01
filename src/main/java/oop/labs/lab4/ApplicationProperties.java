@@ -21,10 +21,10 @@ public class ApplicationProperties
 
         public static class MappingProperties
         {
-            private String mathObjMapFilePath;
+            private String deserTypesMapFilePath;
 
-            public String getMathObjMapFilePath() { return mathObjMapFilePath; }
-            public void setMathObjMapFilePath(String mathObjMapFilePath) { this.mathObjMapFilePath = mathObjMapFilePath; }
+            public String getDeserializableTypesMapFilePath() { return deserTypesMapFilePath; }
+            public void setDeserializableTypesMapFilePath(String deserTypesMapFilePath) { this.deserTypesMapFilePath = deserTypesMapFilePath; }
 
 
             private String mathSolversBeansXmlPath;

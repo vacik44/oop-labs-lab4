@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.*;
 
-@JsonRootName("polynomial")
+@JsonTypeName("polynomial")
 @JsonIncludeProperties("expression")
 @SuppressWarnings("unused")
 public final class PPolynomial implements Polynomial

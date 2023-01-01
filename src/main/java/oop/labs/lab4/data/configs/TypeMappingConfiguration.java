@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("classMapConfig")
 @SuppressWarnings("unused")
-public class ClassMappingConfiguration
+public class TypeMappingConfiguration
 {
     @JsonProperty("class") private String className;
 

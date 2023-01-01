@@ -1,11 +1,8 @@
 package oop.labs.lab4.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import oop.labs.lab4.math.MathematicalException;
-import oop.labs.lab4.service.mapping.MappingException;
 import oop.labs.lab4.service.providers.CalculationsProvider;
-import oop.labs.lab4.service.mapping.MathObjectsMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,15 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class SubmitCalculation
 {
     private final JsonMapper jsonMapper = new JsonMapper();
-    private final MathObjectsMapper modelMapper;
-
     private final CalculationsProvider submitter;
 
 
-    SubmitCalculation(CalculationsProvider submitter, MathObjectsMapper modelMapper)
+    SubmitCalculation(CalculationsProvider submitter)
     {
         this.submitter = submitter;
-        this.modelMapper = modelMapper;
     }
 
 
@@ -37,10 +31,11 @@ public class SubmitCalculation
         try
         {
             if (payload == null) throw new NullPointerException("No condition received");
-            var mathData = modelMapper.json2Entity(jsonMapper.readTree(payload), "condition");
-            return ResponseEntity.status(HttpStatus.OK).body(submitter.submitCalculation(solverId, mathData).toString());
+            //var mathData = modelMapper.json2Entity(jsonMapper.readTree(payload), "condition");
+            //return ResponseEntity.status(HttpStatus.OK).body(submitter.submitCalculation(solverId, mathData).toString());
+            return null;
         }
-        catch (NullPointerException | JsonProcessingException | MappingException e)
+        catch (NullPointerException e)//| JsonProcessingException | MappingException e)
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

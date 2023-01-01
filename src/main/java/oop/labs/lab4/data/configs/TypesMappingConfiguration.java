@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @JsonRootName("mapConfig")
-public class MappingConfiguration
+public class TypesMappingConfiguration
 {
-    @JsonProperty("classes") private List<ClassMappingConfiguration> classes;
+    @JsonProperty("classes") private List<TypeMappingConfiguration> classes;
 
     @JsonSetter("classes")
-    private void setClasses(List<ClassMappingConfiguration> classes) { this.classes = Optional.ofNullable(classes).orElse(new ArrayList<>(0)); }
-    public List<ClassMappingConfiguration> getClasses() { return Collections.unmodifiableList(classes); }
+    private void setClasses(List<TypeMappingConfiguration> classes) { this.classes = Optional.ofNullable(classes).orElse(new ArrayList<>(0)); }
+    public List<TypeMappingConfiguration> getClasses() { return Collections.unmodifiableList(classes); }
 }
