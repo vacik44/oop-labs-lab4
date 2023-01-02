@@ -2,7 +2,6 @@ package oop.labs.lab4;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@SuppressWarnings("unused")
 @ConfigurationProperties(prefix = "app")
 public class ApplicationProperties
 {
@@ -49,10 +48,10 @@ public class ApplicationProperties
 
         public static class RepositoryProperties
         {
-            private String repositoryPath;
+            private String primaryRepositoryPath;
 
-            public String getRepositoryPath() { return repositoryPath; }
-            public void setRepositoryPath(String repositoryPath) { this.repositoryPath = repositoryPath; }
+            public String getPrimaryRepositoryPath() { return primaryRepositoryPath; }
+            public void setPrimaryRepositoryPath(String primaryRepositoryPath) { this.primaryRepositoryPath = primaryRepositoryPath; }
         }
     }
 }

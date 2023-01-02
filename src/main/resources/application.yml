@@ -1,9 +1,9 @@
 app:
     data:
         repos:
-            repository-path: calculations
+            primary-repository-path: .work/calculations
 
     service:
         mapping:
-            math-solvers-beans-xml-path: build/resources/main/application.service.mapping.math-solvers-beans.xml
-            deser-types-map-file-path: build/resources/main/application.service.mapping.deser-types-map.yml
+            math-solvers-beans-xml-path: .work/resources/application.service.mapping.math-solvers-beans.xml
+            deser-types-map-file-path: .work/resources/application.service.mapping.deser-types-map.yml

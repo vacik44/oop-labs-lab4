@@ -4,4 +4,8 @@ classes:
     # Mathematical model objects
     - class: oop.labs.lab4.math.model.matrix.NumMatrixImmutable
     - class: oop.labs.lab4.math.model.anynomials.PPolynomial
+    - class: oop.labs.lab4.math.model.enums.SignificanceType
     - class: oop.labs.lab4.math.model.containers.LU
+
+    # Java math objects
+    - class: java.math.BigDecimal

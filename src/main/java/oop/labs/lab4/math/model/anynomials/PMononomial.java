@@ -9,7 +9,6 @@ import oop.labs.lab4.math.parse.ParsingSource;
 import java.text.ParseException;
 import java.util.*;
 
-@SuppressWarnings("unused")
 public final class PMononomial implements Mononomial
 {
     @Override public boolean isImmutable() { return true; }

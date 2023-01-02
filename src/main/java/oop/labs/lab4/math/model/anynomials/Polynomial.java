@@ -6,7 +6,6 @@ import oop.labs.lab4.math.model.simplets.VariableDefinition;
 import java.math.BigDecimal;
 import java.util.Collection;
 
-@SuppressWarnings("unused")
 public interface Polynomial extends Anynomial
 {
     Iterable<MononomialOdded> mononomialsOdded();

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("classMapConfig")
-@SuppressWarnings("unused")
 public class TypeMappingConfiguration
 {
     @JsonProperty("class") private String className;

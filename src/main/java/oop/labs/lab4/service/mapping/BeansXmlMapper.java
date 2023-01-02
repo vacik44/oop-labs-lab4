@@ -1,5 +1,6 @@
 package oop.labs.lab4.service.mapping;
 
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -17,7 +18,20 @@ public class BeansXmlMapper implements ApplicationMapper
     }
 
 
-    @Override public Class<?> getClassForName(String name) { return context.getType(name); }
-    @Override public Object getInstanceForName(String name) { return context.getBean(name); }
-    @Override public Collection<String> getRegisteredNames() { return Arrays.stream(context.getBeanDefinitionNames()).toList(); }
+    @Override public Class<?> getClassForName(String name)
+    {
+        try { return context.getType(name); }
+        catch (NoSuchBeanDefinitionException e) { throw new MappingManagementException(e); }
+    }
+
+    @Override public Object getInstanceForName(String name)
+    {
+        try { return context.getBean(name); }
+        catch (NoSuchBeanDefinitionException e) { throw new MappingManagementException(e); }
+    }
+
+    @Override public Collection<String> getRegisteredNames()
+    {
+        return Arrays.stream(context.getBeanDefinitionNames()).toList();
+    }
 }

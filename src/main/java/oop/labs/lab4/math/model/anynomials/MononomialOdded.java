@@ -4,7 +4,6 @@ import oop.labs.lab4.math.model.MathObject;
 
 import java.math.BigDecimal;
 
-@SuppressWarnings("unused")
 public interface MononomialOdded extends Mononomial
 {
     BigDecimal odd();

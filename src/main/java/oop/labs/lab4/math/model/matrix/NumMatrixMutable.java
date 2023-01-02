@@ -1,16 +1,14 @@
 package oop.labs.lab4.math.model.matrix;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.*;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 
-@JsonRootName("numMatrix")
+@JsonTypeName("numMatrix")
 @JsonIncludeProperties("elements")
-@SuppressWarnings("unused")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
 public class NumMatrixMutable extends NumMatrix
 {
     @Override public boolean isImmutable() { return false; }

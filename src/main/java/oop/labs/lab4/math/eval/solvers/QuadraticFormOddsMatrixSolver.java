@@ -4,7 +4,7 @@ import oop.labs.lab4.math.eval.EvalCondition;
 import oop.labs.lab4.math.eval.EvalResults;
 import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
-import oop.labs.lab4.math.eval.exceptions.MathEvaluationUnsupportedException;
+import oop.labs.lab4.math.eval.MathEvaluationUnsupportedException;
 import oop.labs.lab4.math.model.anynomials.Polynomial;
 import oop.labs.lab4.math.model.matrix.NumMatrixImmutable;
 import oop.labs.lab4.math.model.matrix.NumMatrixMutable;
@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-@SuppressWarnings("unused")
 public class QuadraticFormOddsMatrixSolver implements Solver
 {
     @Override
@@ -34,7 +33,7 @@ public class QuadraticFormOddsMatrixSolver implements Solver
                 if (i == j) odds.set(i, j, odd);
                 else
                 {
-                    odd = odd.divide(BigDecimal.valueOf(2), condition.computingContext());
+                    odd = odd.divide(BigDecimal.valueOf(2), condition.computingMc());
                     odds.set(i, j, odd);
                     odds.set(j, i, odd);
                 }

@@ -8,8 +8,6 @@ import oop.labs.lab4.math.parse.ParsingSource;
 import java.text.ParseException;
 import java.util.Objects;
 
-
-@SuppressWarnings("unused")
 public final class VariableDfn implements VariableDefinition
 {
     @Override public boolean isImmutable() { return true; }

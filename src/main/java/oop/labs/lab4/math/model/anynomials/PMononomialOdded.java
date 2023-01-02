@@ -10,7 +10,6 @@ import java.text.ParseException;
 import java.util.Optional;
 import java.util.Set;
 
-@SuppressWarnings("unused")
 public class PMononomialOdded implements MononomialOdded
 {
     @Override public boolean isImmutable() { return true; }

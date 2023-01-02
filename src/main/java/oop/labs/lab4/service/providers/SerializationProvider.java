@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import oop.labs.lab4.service.mapping.ApplicationMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class SerializationProvider
 {
     private final ObjectMapper jsonObjMapper;

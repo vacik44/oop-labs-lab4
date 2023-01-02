@@ -1,18 +1,18 @@
 package oop.labs.lab4.math.eval;
 
 import com.fasterxml.jackson.annotation.*;
-import oop.labs.lab4.service.mapping.JsonTypeInfoStandard;
 
 import java.util.*;
 
-@SuppressWarnings("unused")
 @JsonTypeName("solutionNode")
 @JsonIncludeProperties({"comment", "subNodes", "content"})
 public final class SolutionNode
 {
     @JsonProperty("comment") private final String comment;
     @JsonProperty("subNodes") private final List<SolutionNode> subNodes;
-    @JsonProperty("content") @JsonTypeInfoStandard @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") private final Object content;
+    @JsonProperty("content")
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+    private final Object content;
 
 
     @Override

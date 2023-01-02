@@ -3,7 +3,6 @@ package oop.labs.lab4.math.model.anynomials;
 import oop.labs.lab4.math.model.MathObject;
 import oop.labs.lab4.math.model.simplets.VariableDefinition;
 
-@SuppressWarnings("unused")
 public interface Mononomial extends Anynomial
 {
     Integer powerOfContained(VariableDefinition variable);

@@ -1,11 +1,9 @@
 package oop.labs.lab4.math.model.matrix;
 
-import oop.labs.lab4.math.eval.exceptions.MathEvaluationUnsupportedException;
 import oop.labs.lab4.math.model.MathObject;
 
 import java.util.Arrays;
 
-@SuppressWarnings("unused")
 public interface Matrix<TElement> extends MathObject
 {
     int[] size();

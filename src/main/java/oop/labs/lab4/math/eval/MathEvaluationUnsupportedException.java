@@ -1,4 +1,4 @@
-package oop.labs.lab4.math.eval.exceptions;
+package oop.labs.lab4.math.eval;
 
 import oop.labs.lab4.math.model.anynomials.Polynomial;
 import oop.labs.lab4.math.model.matrix.Matrix;

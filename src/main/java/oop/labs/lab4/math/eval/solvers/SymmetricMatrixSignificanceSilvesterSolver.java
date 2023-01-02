@@ -4,7 +4,7 @@ import oop.labs.lab4.math.eval.EvalCondition;
 import oop.labs.lab4.math.eval.EvalResults;
 import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
-import oop.labs.lab4.math.eval.exceptions.MathEvaluationUnsupportedException;
+import oop.labs.lab4.math.eval.MathEvaluationUnsupportedException;
 import oop.labs.lab4.math.model.enums.SignificanceType;
 import oop.labs.lab4.math.model.matrix.MatrixNumeric;
 

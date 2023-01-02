@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("evalResults")
-@SuppressWarnings("unused")
 public final class EvalResults
 {
     @JsonProperty("result") private final Object result;

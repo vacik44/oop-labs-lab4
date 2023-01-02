@@ -21,7 +21,7 @@
 
     <bean name="quadratic-form-significance-solver" class="oop.labs.lab4.math.eval.solvers.QuadraticFormSignificanceSolver">
         <constructor-arg name="quadraticFormOddsMatrixSolver" ref="quadratic-form-odds-matrix-solver"/>
-        <constructor-arg name="symmetricMatrixSignificanceSolver" ref="symmetric-matrix-significance-silvester-solver"/>
+        <constructor-arg name="symmetricMatrixSignificanceSolver" ref="symmetric-matrix-significance-solver"/>
     </bean>
 
 </beans>

@@ -9,7 +9,7 @@ import java.util.List;
 
 @JsonTypeName("numMatrix")
 @JsonIncludeProperties("elements")
-@SuppressWarnings("unused")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
 public final class NumMatrixImmutable extends NumMatrix
 {
     @Override public boolean isImmutable() { return true; }

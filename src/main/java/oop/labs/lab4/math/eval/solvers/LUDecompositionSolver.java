@@ -4,14 +4,13 @@ import oop.labs.lab4.math.eval.EvalCondition;
 import oop.labs.lab4.math.eval.EvalResults;
 import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
-import oop.labs.lab4.math.eval.exceptions.MathEvaluationUnsupportedException;
+import oop.labs.lab4.math.eval.MathEvaluationUnsupportedException;
 import oop.labs.lab4.math.model.containers.LU;
 import oop.labs.lab4.math.model.matrix.MatrixNumeric;
 import oop.labs.lab4.math.model.matrix.NumMatrixImmutable;
 import oop.labs.lab4.math.model.matrix.NumMatrixMutable;
 import java.math.BigDecimal;
 
-@SuppressWarnings("unused")
 public class LUDecompositionSolver implements Solver
 {
     @Override
@@ -50,7 +49,7 @@ public class LUDecompositionSolver implements Solver
             data.lower.set(row, col, data.origin.get(row, col).subtract(sum));
         }
 
-        data.solution.newFinalNode(String.format("Filling column %d of L matrix:", col), data.lower.rounded(data.condition.presentationContext()));
+        data.solution.newFinalNode(String.format("Filling column %d of L matrix:", col), data.lower.rounded(data.condition.presentationMc()));
     }
 
     private static void fillUpperLine(SolverData data, int row)
@@ -59,10 +58,10 @@ public class LUDecompositionSolver implements Solver
         {
             var sum = BigDecimal.ZERO;
             for (var i = 1; i <= row; i++) sum = sum.add(data.lower.get(row, i).multiply(data.upper.get(i, col)));
-            data.upper.set(row, col, data.origin.get(row, col).subtract(sum).divide(data.lower.get(row, row), data.condition.computingContext()));
+            data.upper.set(row, col, data.origin.get(row, col).subtract(sum).divide(data.lower.get(row, row), data.condition.computingMc()));
         }
 
-        data.solution.newFinalNode(String.format("Filling line %d of U matrix:", row), data.upper.rounded(data.condition.presentationContext()));
+        data.solution.newFinalNode(String.format("Filling line %d of U matrix:", row), data.upper.rounded(data.condition.presentationMc()));
     }
 
 

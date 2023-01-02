@@ -1,8 +1,6 @@
 package oop.labs.lab4.math.model.containers;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.*;
 import oop.labs.lab4.math.model.MathObject;
 import oop.labs.lab4.math.model.matrix.MatrixNumeric;
 
@@ -10,15 +8,20 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Objects;
 
-@SuppressWarnings("unused")
 @JsonTypeName("decompositionLU")
+@JsonIncludeProperties({"L", "U"})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
 public final class LU implements MathObject
 {
     @Override public boolean isImmutable() { return true; }
 
 
-    @JsonProperty("L") private final MatrixNumeric lower;
-    @JsonProperty("U") private final MatrixNumeric upper;
+    @JsonProperty("L")
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+    private final MatrixNumeric lower;
+    @JsonProperty("U")
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+    private final MatrixNumeric upper;
 
 
     @Override

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-@SuppressWarnings("unused")
 public interface MatrixNumeric extends Matrix<BigDecimal>
 {
     void round(MathContext mc);

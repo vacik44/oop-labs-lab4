@@ -4,42 +4,37 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import oop.labs.lab4.service.mapping.JsonTypeInfoStandard;
-
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Optional;
 
 @JsonTypeName("evalCondition")
-@SuppressWarnings("unused")
 public final class EvalCondition
 {
-    @JsonProperty("computingContext") private final MathContext computingContext;
-    @JsonProperty("presentationContext") private final MathContext presentationContext;
-    @JsonProperty("task") @JsonTypeInfoStandard @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") private final Object mathTask;
+    @JsonProperty("computingContext") private final EvalContext computingContext;
+    @JsonProperty("presentationContext") private final EvalContext presentationContext;
+    @JsonProperty("task")
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+    private final Object mathTask;
 
 
-    @JsonCreator
-    public EvalCondition(@JsonProperty("task") Object mathTask)
+    public EvalCondition(Object mathTask)
     {
         this(mathTask, null, null);
     }
 
-    @JsonCreator
-    public EvalCondition(@JsonProperty("task") Object mathTask,
-                         @JsonProperty("presentationContext") MathContext presentationContext)
+    public EvalCondition(Object mathTask, EvalContext presentationContext)
     {
         this(mathTask, presentationContext, null);
     }
 
     @JsonCreator
     public EvalCondition(@JsonProperty("task") Object mathTask,
-                         @JsonProperty("presentationContext") MathContext presentationContext,
-                         @JsonProperty("computingContext") MathContext computingContext)
+                         @JsonProperty("presentationContext") EvalContext presentationContext,
+                         @JsonProperty("computingContext") EvalContext computingContext)
     {
         this.mathTask = mathTask;
-        this.presentationContext = Optional.ofNullable(presentationContext).orElse(new MathContext(4, RoundingMode.HALF_UP));
-        this.computingContext = Optional.ofNullable(computingContext).orElse(new MathContext(25, RoundingMode.HALF_UP));
+        this.presentationContext = Optional.ofNullable(presentationContext).orElse(EvalContext.DEFAULT_PRESENTATION_CONTEXT);
+        this.computingContext = Optional.ofNullable(computingContext).orElse(EvalContext.DEFAULT_COMPUTING_CONTEXT);
     }
 
 
@@ -47,7 +42,11 @@ public final class EvalCondition
     public EvalCondition computingSubCondition(Object subTask) { return new EvalCondition(subTask, computingContext, computingContext); }
 
 
-    public MathContext presentationContext() { return presentationContext; }
-    public MathContext computingContext() { return computingContext; }
+    public MathContext presentationMc() { return presentationContext.getMathContext(); }
+    public MathContext computingMc() { return computingContext.getMathContext(); }
+
+    public EvalContext presentationContext() { return presentationContext; }
+    public EvalContext computingContext() { return computingContext; }
+
     public Object task() { return mathTask; }
 }

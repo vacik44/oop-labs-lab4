@@ -6,7 +6,6 @@ import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
 import oop.labs.lab4.math.model.containers.LU;
 
-@SuppressWarnings("unused")
 public class MatrixDeterminantSolver implements Solver
 {
     private final Solver luDecompositionSolver;
@@ -26,7 +25,7 @@ public class MatrixDeterminantSolver implements Solver
         var resultLu = luDecompositionSolver.computeSolution(condition.computingSubCondition(condition.task()));
         solution.addNode(resultLu.solution());
 
-        var result = ((LU) resultLu.result()).computeOriginDet().round(condition.presentationContext());
+        var result = ((LU) resultLu.result()).computeOriginDet().round(condition.presentationMc());
         solution.newFinalNode("Calculate the determinant of the matrix from the resulting lu decomposition " +
                               "by multiplying the determinants of the resulting triangular matrices", result);
 

@@ -5,7 +5,6 @@ import oop.labs.lab4.math.eval.EvalResults;
 import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
 
-@SuppressWarnings("unused")
 public class QuadraticFormSignificanceSolver implements Solver
 {
     private final Solver symmetricMatrixSignificanceSolver;

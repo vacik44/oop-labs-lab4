@@ -2,7 +2,6 @@ package oop.labs.lab4.math.parse;
 
 import java.math.BigDecimal;
 
-@SuppressWarnings("unused")
 public class MathParser
 {
     public static Integer parseUInt(ParsingSourceIterator source)
