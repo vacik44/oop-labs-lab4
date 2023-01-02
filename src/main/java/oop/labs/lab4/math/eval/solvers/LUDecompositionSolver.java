@@ -2,7 +2,6 @@ package oop.labs.lab4.math.eval.solvers;
 
 import oop.labs.lab4.math.eval.EvalCondition;
 import oop.labs.lab4.math.eval.EvalResults;
-import oop.labs.lab4.math.eval.exceptions.MathEvaluationUnsupportedException;
 import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
 import oop.labs.lab4.math.model.containers.LU;
@@ -43,7 +42,7 @@ public class LUDecompositionSolver implements Solver
         return new EvalResults(resultLU, data.solution);
     }
 
-    private void fillLowerColumn(SolverData data, int col)
+    private static void fillLowerColumn(SolverData data, int col)
     {
         for (var row = col; row <= data.origin.rows(); row++)
         {
@@ -55,7 +54,7 @@ public class LUDecompositionSolver implements Solver
         data.solution.newFinalNode(String.format("Filling column %d of L matrix:", col), data.lowerCopy());
     }
 
-    private void fillUpperLine(SolverData data, int row)
+    private static void fillUpperLine(SolverData data, int row)
     {
         for (var col = row + 1; col <= data.origin.cols(); col++)
         {
@@ -77,7 +76,7 @@ public class LUDecompositionSolver implements Solver
         private final NumMatrixMutable upper;
 
 
-        public SolverData(MathContext context, MatrixNumeric origin, SolutionNode solution, NumMatrixMutable lower, NumMatrixMutable upper)
+        private SolverData(MathContext context, MatrixNumeric origin, SolutionNode solution, NumMatrixMutable lower, NumMatrixMutable upper)
         {
             this.context = context;
             this.origin = origin;
