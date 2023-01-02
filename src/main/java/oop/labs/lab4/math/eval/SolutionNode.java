@@ -12,7 +12,7 @@ public final class SolutionNode
 {
     @JsonProperty("comment") private final String comment;
     @JsonProperty("subNodes") private final List<SolutionNode> subNodes;
-    @JsonProperty("content")  @JsonTypeInfoStandard private final Object content;
+    @JsonProperty("content") @JsonTypeInfoStandard @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") private final Object content;
 
 
     @Override

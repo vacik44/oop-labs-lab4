@@ -45,6 +45,7 @@ class ApplicationTests
 
 		var result = calculationsProvider.submitCalculation("matrix-determinant-solver", new EvalCondition(task));
 		System.out.println(result.result());
+		System.out.println(serializationProvider.mapper().writeValueAsString(result.solution()));
 	}
 
 

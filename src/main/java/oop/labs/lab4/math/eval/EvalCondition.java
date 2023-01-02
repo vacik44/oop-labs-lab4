@@ -2,6 +2,7 @@ package oop.labs.lab4.math.eval;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import oop.labs.lab4.service.mapping.JsonTypeInfoStandard;
 
@@ -15,7 +16,7 @@ public final class EvalCondition
 {
     @JsonProperty("computingContext") private final MathContext computingContext;
     @JsonProperty("presentationContext") private final MathContext presentationContext;
-    @JsonProperty("task") @JsonTypeInfoStandard private final Object mathTask;
+    @JsonProperty("task") @JsonTypeInfoStandard @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") private final Object mathTask;
 
 
     @JsonCreator
