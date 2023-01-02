@@ -16,11 +16,8 @@ public interface Matrix<TElement> extends MathObject
     default boolean isSquare() { return rows() == cols(); }
 
 
-    default Matrix<TElement> throwUnsupportedIfNotSquare(String message) { if (!isSquare()) throw new MathEvaluationUnsupportedException(message); else return this; }
-    default Matrix<TElement> throwUnsupportedIfNotSquare() { return throwUnsupportedIfNotSquare("Operation supported for square matrices only"); }
+    Matrix<TElement> angularMinorMatrix(int power);
 
-
-    Matrix<TElement> reduced(int dropRow, int dropCol);
 
     TElement get(int row, int col);
     Matrix<TElement> set(int row, int col, TElement value);

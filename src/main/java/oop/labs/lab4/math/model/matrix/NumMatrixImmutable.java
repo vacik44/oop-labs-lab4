@@ -3,6 +3,7 @@ package oop.labs.lab4.math.model.matrix;
 import com.fasterxml.jackson.annotation.*;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,10 +41,14 @@ public final class NumMatrixImmutable extends NumMatrix
     public NumMatrixImmutable(MatrixNumeric other) { this(buildMatrix(other), false); }
 
 
-    @Override public NumMatrixImmutable reduced(int dropRow, int dropCol) { return new NumMatrixImmutable(buildReducedMatrix(this, dropCol, dropRow), false); }
     public static NumMatrixImmutable immutable(NumMatrixMutable matrix) { return NumMatrixImmutable.instance(matrix.elements); }
     public static NumMatrixImmutable eye(int size) { return NumMatrixImmutable.instance(buildIdentityMatrix(size)); }
 
+    @Override public NumMatrixImmutable angularMinorMatrix(int power) { return NumMatrixImmutable.instance(buildAngularMinorMatrix(power)); }
+    @Override public NumMatrixImmutable rounded(MathContext mc) { return NumMatrixImmutable.instance(buildRoundedMatrix(mc)); }
+
+
+    @Override public void round(MathContext mc) { throw new UnsupportedOperationException(); }
 
     @Override public Matrix<BigDecimal> set(int row, int col, BigDecimal value) { throw new UnsupportedOperationException(); }
 

@@ -9,6 +9,8 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public interface Anynomial extends MathObject, MathExpressionable
 {
+    Integer power();
+
     int variablesCount();
     boolean containsVariable(VariableDefinition variable);
     Set<VariableDefinition> variables();

@@ -25,7 +25,7 @@ public class CalculationsProvider
         try
         {
             var solver = (Solver) solvers.getInstanceForName(solverId);
-            return solver.GetSolution(condition);
+            return solver.computeSolution(condition);
         }
         catch (BeansException exception)
         {

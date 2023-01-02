@@ -1,9 +1,9 @@
 package oop.labs.lab4.math.model.matrix;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import oop.labs.lab4.math.model.MathObject;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.*;
 
 @SuppressWarnings("unused")
@@ -36,24 +36,24 @@ public abstract class NumMatrix implements MatrixNumeric
     }
 
 
-    protected static List<List<BigDecimal>> buildReducedMatrix(MatrixNumeric origin, int dropRow, int dropCol)
+    protected List<List<BigDecimal>> buildAngularMinorMatrix(int power)
     {
-        var source = new ArrayList<List<BigDecimal>>(origin.rows() - 1);
+        var source = new ArrayList<List<BigDecimal>>(power);
 
-        for (var i = 1; i <= origin.rows(); i++)
+        for (var originRow: elements.subList(0, power))
         {
-            var row = new ArrayList<BigDecimal>(origin.cols() - 1);
-
-            if (i != dropRow)
-                for (var j = 1; j <= origin.cols(); j++)
-                    if (j != dropCol)
-                        row.add(origin.get(i, j));
-
-            source.add(row);
+            var srcRow = new ArrayList<BigDecimal>(power);
+            srcRow.addAll(originRow.subList(0, power));
+            source.add(srcRow);
         }
 
         return source;
     }
+    protected List<List<BigDecimal>> buildRoundedMatrix(MathContext mc)
+    {
+        return elements.stream().map(row -> row.stream().map(val -> val.round(mc)).toList()).toList();
+    }
+
 
     protected static List<List<BigDecimal>> buildIdentityMatrix(int size)
     {

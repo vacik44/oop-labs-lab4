@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 @JsonRootName("numMatrix")
@@ -39,8 +40,19 @@ public class NumMatrixMutable extends NumMatrix
     public NumMatrixMutable(MatrixNumeric other) { this(buildMatrix(other), false); }
 
 
-    @Override public NumMatrixMutable reduced(int dropRow, int dropCol) { return new NumMatrixMutable(buildReducedMatrix(this, dropCol, dropRow), false); }
     public static NumMatrixMutable eye(int size) { return NumMatrixMutable.instance(buildIdentityMatrix(size)); }
+
+    @Override public NumMatrixMutable angularMinorMatrix(int power) { return NumMatrixMutable.instance(buildAngularMinorMatrix(power)); }
+    @Override public NumMatrixMutable rounded(MathContext mc) { return NumMatrixMutable.instance(buildRoundedMatrix(mc)); }
+
+
+    @Override
+    public void round(MathContext mc)
+    {
+        for (var row: elements)
+            for (var i = 0; i < cols(); i++)
+                row.set(i, row.get(i).round(mc));
+    }
 
 
     @Override

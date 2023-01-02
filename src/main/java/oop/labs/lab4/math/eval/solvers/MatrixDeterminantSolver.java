@@ -4,10 +4,7 @@ import oop.labs.lab4.math.eval.EvalCondition;
 import oop.labs.lab4.math.eval.EvalResults;
 import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
-import oop.labs.lab4.math.eval.exceptions.MathEvaluationUnsupportedException;
 import oop.labs.lab4.math.model.containers.LU;
-import oop.labs.lab4.math.model.matrix.Matrix;
-import oop.labs.lab4.math.model.matrix.MatrixNumeric;
 
 @SuppressWarnings("unused")
 public class MatrixDeterminantSolver implements Solver
@@ -22,15 +19,14 @@ public class MatrixDeterminantSolver implements Solver
 
 
     @Override
-    public EvalResults GetSolution(EvalCondition condition)
+    public EvalResults computeSolution(EvalCondition condition)
     {
-        var matrix = (MatrixNumeric)((Matrix<?>) condition.task()).throwUnsupportedIfNotSquare();
-        var solution = new SolutionNode("Evaluate determinant for matrix:", matrix);
+        var solution = new SolutionNode("Evaluate determinant for matrix:", condition.task());
 
-        var resultLu = luDecompositionSolver.GetSolution(new EvalCondition(matrix, condition.context()));
+        var resultLu = luDecompositionSolver.computeSolution(condition.computingSubCondition(condition.task()));
         solution.addNode(resultLu.solution());
 
-        var result = ((LU) resultLu.result()).computeOriginDet();
+        var result = ((LU) resultLu.result()).computeOriginDet().round(condition.presentationContext());
         solution.newFinalNode("Calculate the determinant of the matrix from the resulting lu decomposition " +
                               "by multiplying the determinants of the resulting triangular matrices", result);
 

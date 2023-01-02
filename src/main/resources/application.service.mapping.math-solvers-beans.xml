@@ -5,12 +5,23 @@
 
     <bean name="lu-decomposition-solver" class="oop.labs.lab4.math.eval.solvers.LUDecompositionSolver"/>
 
+    <bean name="quadratic-form-odds-matrix-solver" class="oop.labs.lab4.math.eval.solvers.QuadraticFormOddsMatrixSolver"/>
+
     <bean name="matrix-determinant-solver" class="oop.labs.lab4.math.eval.solvers.MatrixDeterminantSolver">
         <constructor-arg name="luDecompositionSolver" ref="lu-decomposition-solver"/>
     </bean>
 
-    <bean name="quadratic-form-significance-solver" class="oop.labs.lab4.math.eval.solvers.QuadraticFormSignificanceSolver">
+    <bean name="symmetric-matrix-significance-silvester-solver" class="oop.labs.lab4.math.eval.solvers.SymmetricMatrixSignificanceSilvesterSolver">
         <constructor-arg name="matrixDeterminantSolver" ref="matrix-determinant-solver"/>
+    </bean>
+
+    <bean name="symmetric-matrix-significance-solver" class="oop.labs.lab4.math.eval.solvers.SymmetricMatrixSignificanceSolver">
+        <constructor-arg name="symmetricMatrixSignificanceSilvesterSolver" ref="symmetric-matrix-significance-silvester-solver"/>
+    </bean>
+
+    <bean name="quadratic-form-significance-solver" class="oop.labs.lab4.math.eval.solvers.QuadraticFormSignificanceSolver">
+        <constructor-arg name="quadraticFormOddsMatrixSolver" ref="quadratic-form-odds-matrix-solver"/>
+        <constructor-arg name="symmetricMatrixSignificanceSolver" ref="symmetric-matrix-significance-silvester-solver"/>
     </bean>
 
 </beans>

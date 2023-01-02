@@ -17,9 +17,9 @@ public interface Polynomial extends Anynomial
     Collection<Mononomial> mononomials();
 
 
+    default Integer power() { return maxMononomialPower(); }
     Integer maxMononomialPower();
     Integer minMononomialPower();
-    default Integer power() { return maxMononomialPower(); }
 
 
     default boolean equivalentByMononomials(Polynomial o)
