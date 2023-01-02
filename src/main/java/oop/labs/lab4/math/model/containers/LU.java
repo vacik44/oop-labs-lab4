@@ -2,12 +2,12 @@ package oop.labs.lab4.math.model.containers;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import oop.labs.lab4.math.model.MathObject;
 import oop.labs.lab4.math.model.matrix.MatrixNumeric;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Objects;
 
 @SuppressWarnings("unused")
@@ -57,13 +57,5 @@ public final class LU implements MathObject
     public MatrixNumeric upper() { return upper; }
 
 
-    public BigDecimal computeOriginDet()
-    {
-        var det = BigDecimal.ONE;
-
-        for (var i = 1; i < lower().cols(); i++)
-            det = det.multiply(lower().get(i, i));
-
-        return det;
-    }
+    public BigDecimal computeOriginDet() { return Arrays.stream(lower.diag()).reduce(BigDecimal.ONE, BigDecimal::multiply); }
 }

@@ -1,12 +1,13 @@
 package oop.labs.lab4.math.eval.solvers;
 
-import oop.labs.lab4.math.eval.EvaluationResult;
+import oop.labs.lab4.math.eval.EvalCondition;
+import oop.labs.lab4.math.eval.EvalResults;
 import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
 import oop.labs.lab4.math.eval.exceptions.MathEvaluationUnsupportedException;
 import oop.labs.lab4.math.model.containers.LU;
+import oop.labs.lab4.math.model.matrix.Matrix;
 import oop.labs.lab4.math.model.matrix.MatrixNumeric;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @SuppressWarnings("unused")
 public class MatrixDeterminantSolver implements Solver
@@ -21,20 +22,18 @@ public class MatrixDeterminantSolver implements Solver
 
 
     @Override
-    public EvaluationResult GetSolution(Object condition)
+    public EvalResults GetSolution(EvalCondition condition)
     {
-        var matrix = (MatrixNumeric) condition;
-        if (matrix.rows() != matrix.cols()) throw new MathEvaluationUnsupportedException("Determinant defined for quadratic matrices only");
-
+        var matrix = (MatrixNumeric)((Matrix<?>) condition.task()).throwUnsupportedIfNotSquare();
         var solution = new SolutionNode("Evaluate determinant for matrix:", matrix);
 
-        var resultLu = luDecompositionSolver.GetSolution(matrix);
+        var resultLu = luDecompositionSolver.GetSolution(new EvalCondition(matrix, condition.context()));
         solution.addNode(resultLu.solution());
 
         var result = ((LU) resultLu.result()).computeOriginDet();
         solution.newFinalNode("Calculate the determinant of the matrix from the resulting lu decomposition " +
                               "by multiplying the determinants of the resulting triangular matrices", result);
 
-        return new EvaluationResult(result, solution);
+        return new EvalResults(result, solution);
     }
 }

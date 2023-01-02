@@ -91,6 +91,7 @@ public final class PPolynomial implements Polynomial
 
     @Override public int monomialsCount() { return mononomials.size(); }
     @Override public Set<Mononomial> mononomials() { return mononomials.keySet(); }
+
     @Override public boolean containsMononomial(Mononomial mononomial) { return mononomials.containsKey(mononomial); }
 
     @Override
@@ -102,7 +103,13 @@ public final class PPolynomial implements Polynomial
                 .toList();
     }
 
+
+    @Override public Integer maxMononomialPower() { return mononomials.keySet().stream().max(Comparator.comparing(Mononomial::power)).orElseThrow().power(); }
+    @Override public Integer minMononomialPower() { return mononomials.keySet().stream().min(Comparator.comparing(Mononomial::power)).orElseThrow().power(); }
+
+
     @Override public BigDecimal oddOf(Mononomial mononomial) { return mononomials.getOrDefault(mononomial, BigDecimal.ONE); }
+    @Override public BigDecimal oddOf(VariableDefinition... variables) { return oddOf(PMononomial.of(variables)); }
     @Override public BigDecimal oddOfContained(Mononomial mononomial) { return mononomials.get(mononomial); }
 
 

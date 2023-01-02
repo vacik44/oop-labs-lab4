@@ -1,5 +1,6 @@
 package oop.labs.lab4.math.model.anynomials;
 
+import oop.labs.lab4.math.eval.exceptions.MathEvaluationUnsupportedException;
 import oop.labs.lab4.math.model.matrix.MatrixNumeric;
 import oop.labs.lab4.math.model.matrix.NumMatrixImmutable;
 import oop.labs.lab4.math.model.simplets.VariableDefinition;
@@ -79,11 +80,16 @@ public final class QPolynomial implements PolynomialQuadratic
 
         return set;
     }
-    @Override
-    public boolean containsMononomial(Mononomial mononomial)
+
+    @Override public boolean containsMononomial(Mononomial mononomial)
     {
         return oddOfContained(mononomial) != null;
     }
+
+
+    @Override public Integer maxMononomialPower() { return 2; }
+    @Override public Integer minMononomialPower() { return 2; }
+
 
     @Override
     public Iterable<MononomialOdded> mononomialsOdded()
@@ -103,7 +109,13 @@ public final class QPolynomial implements PolynomialQuadratic
         return Optional.ofNullable(oddOfContained(mononomial)).orElse(BigDecimal.ZERO);
     }
     @Override public BigDecimal oddOf(int index1, int index2) { return odds.get(index1, index2); }
-    @Override public BigDecimal oddOfContained(Mononomial mononomial)
+    @Override public BigDecimal oddOf(VariableDefinition... variables)
+    {
+        if (variables.length != 2) throw new MathEvaluationUnsupportedException("Quadratic polynomial contains only mononomials with power of 2");
+        return odds.get(indexes.get(variables[0]), indexes.get(variables[1]));
+    }
+    @Override
+    public BigDecimal oddOfContained(Mononomial mononomial)
     {
         if (mononomial.power() != 2 || !indexes.keySet().containsAll(mononomial.variables())) return null;
         var pos = mononomial.variables().stream().map(indexes::get).toList();

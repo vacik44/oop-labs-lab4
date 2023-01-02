@@ -16,14 +16,19 @@ public class SerializationProvider
 
     public SerializationProvider(@Qualifier("DeserializableTypesMapper") ApplicationMapper deserObjMapper)
     {
-        this.jsonObjMapper = new ObjectMapper().registerModule(buildConfig(deserObjMapper));
+        this.jsonObjMapper = configureMapper(new ObjectMapper().registerModule(buildConfig(deserObjMapper)));
     }
 
-    private static Module buildConfig(ApplicationMapper deserObjMapper)
+    protected Module buildConfig(ApplicationMapper deserObjMapper)
     {
         var module = new SimpleModule();
         for (var name: deserObjMapper.getRegisteredNames()) module.registerSubtypes(new NamedType(deserObjMapper.getClassForName(name), name));
         return module;
+    }
+
+    protected ObjectMapper configureMapper(ObjectMapper jsonObjMapper)
+    {
+        return jsonObjMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
     }
 
 

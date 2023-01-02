@@ -1,26 +1,37 @@
 package oop.labs.lab4.math.model.anynomials;
 
 import oop.labs.lab4.math.model.MathObject;
+import oop.labs.lab4.math.model.simplets.VariableDefinition;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.Collection;
 
 @SuppressWarnings("unused")
 public interface Polynomial extends Anynomial
 {
     Iterable<MononomialOdded> mononomialsOdded();
 
+
     int monomialsCount();
     boolean containsMononomial(Mononomial mononomial);
-    Set<Mononomial> mononomials();
+    Collection<Mononomial> mononomials();
+
+
+    Integer maxMononomialPower();
+    Integer minMononomialPower();
+    default Integer power() { return maxMononomialPower(); }
+
 
     default boolean equivalentByMononomials(Polynomial o)
     {
         return o.monomialsCount() != monomialsCount() && o.mononomials().containsAll(mononomials());
     }
 
+
     BigDecimal oddOf(Mononomial mononomial);
     BigDecimal oddOfContained(Mononomial mononomial);
+    BigDecimal oddOf(VariableDefinition... variables);
+
 
     default boolean equivalent(MathObject o)
     {

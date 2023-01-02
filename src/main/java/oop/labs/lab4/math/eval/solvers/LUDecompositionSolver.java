@@ -1,28 +1,30 @@
 package oop.labs.lab4.math.eval.solvers;
 
-import oop.labs.lab4.math.eval.EvaluationResult;
+import oop.labs.lab4.math.eval.EvalCondition;
+import oop.labs.lab4.math.eval.EvalResults;
 import oop.labs.lab4.math.eval.exceptions.MathEvaluationUnsupportedException;
 import oop.labs.lab4.math.eval.SolutionNode;
 import oop.labs.lab4.math.eval.Solver;
 import oop.labs.lab4.math.model.containers.LU;
+import oop.labs.lab4.math.model.matrix.Matrix;
 import oop.labs.lab4.math.model.matrix.MatrixNumeric;
 import oop.labs.lab4.math.model.matrix.NumMatrixImmutable;
 import oop.labs.lab4.math.model.matrix.NumMatrixMutable;
-
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 @SuppressWarnings("unused")
 public class LUDecompositionSolver implements Solver
 {
     @Override
-    public EvaluationResult GetSolution(Object condition)
+    public EvalResults GetSolution(EvalCondition condition)
     {
         var data = SolverData.init(condition);
 
         for (var i = 1; i <= data.origin.rows(); i++) data.lower.set(i, 1, data.origin.get(i, 1));
         data.solution.newFinalNode("Filling first column of L matrix with values from first column of origin matrix:", data.lowerCopy());
 
-        fillLowerColumn(data, 0);
+        fillUpperLine(data, 1);
 
         if (data.origin.rows() > 1)
         {
@@ -38,7 +40,7 @@ public class LUDecompositionSolver implements Solver
         var resultLU = new LU(NumMatrixImmutable.immutable(data.lower), NumMatrixImmutable.immutable(data.upper));
         data.solution.newFinalNode("Resulting LU-factorization:", resultLU);
 
-        return new EvaluationResult(resultLU, data.solution);
+        return new EvalResults(resultLU, data.solution);
     }
 
     private void fillLowerColumn(SolverData data, int col)
@@ -55,11 +57,11 @@ public class LUDecompositionSolver implements Solver
 
     private void fillUpperLine(SolverData data, int row)
     {
-        for (var col = row + 1; row <= data.origin.cols(); col++)
+        for (var col = row + 1; col <= data.origin.cols(); col++)
         {
             var sum = BigDecimal.ZERO;
             for (var i = 1; i <= row; i++) sum = sum.add(data.lower.get(row, i).multiply(data.upper.get(i, col)));
-            data.upper.set(row, col, data.origin.get(row, col).subtract(sum));
+            data.upper.set(row, col, data.origin.get(row, col).subtract(sum).divide(data.lower.get(row, row), data.context));
         }
 
         data.solution.newFinalNode(String.format("Filling line %d of U matrix:", row), data.upperCopy());
@@ -68,25 +70,25 @@ public class LUDecompositionSolver implements Solver
 
     private static class SolverData
     {
+        private final MathContext context;
         private final MatrixNumeric origin;
         private final SolutionNode solution;
         private final NumMatrixMutable lower;
         private final NumMatrixMutable upper;
 
 
-        public SolverData(MatrixNumeric origin, SolutionNode solution, NumMatrixMutable lower, NumMatrixMutable upper)
+        public SolverData(MathContext context, MatrixNumeric origin, SolutionNode solution, NumMatrixMutable lower, NumMatrixMutable upper)
         {
+            this.context = context;
             this.origin = origin;
             this.solution = solution;
             this.lower = lower;
             this.upper = upper;
         }
 
-        public static SolverData init(Object condition)
+        public static SolverData init(EvalCondition condition)
         {
-            var origin = (MatrixNumeric) condition;
-            if (origin.rows() != origin.cols()) throw new MathEvaluationUnsupportedException("LU decomposition available for quadratic matrices only");
-
+            var origin = (MatrixNumeric)((Matrix<?>) condition.task()).throwUnsupportedIfNotSquare();
             var solution = new SolutionNode("Perform LU-factorization for matrix:", origin);
 
             var upper = NumMatrixMutable.eye(origin.rows());
@@ -95,7 +97,7 @@ public class LUDecompositionSolver implements Solver
             var lower = new NumMatrixMutable(origin.rows(), origin.cols(), BigDecimal.ZERO);
             solution.newFinalNode("Create empty lower matrix", new NumMatrixImmutable(lower));
 
-            return new SolverData(origin, solution, lower, upper);
+            return new SolverData(condition.context(), origin, solution, lower, upper);
         }
 
 

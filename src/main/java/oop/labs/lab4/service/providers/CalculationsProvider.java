@@ -1,5 +1,7 @@
 package oop.labs.lab4.service.providers;
 
+import oop.labs.lab4.math.eval.EvalCondition;
+import oop.labs.lab4.math.eval.EvalResults;
 import oop.labs.lab4.math.eval.Solver;
 import oop.labs.lab4.service.mapping.ApplicationMapper;
 import org.springframework.beans.BeansException;
@@ -18,11 +20,10 @@ public class CalculationsProvider
     }
 
 
-    public Object submitCalculation(String solverId, Object condition)
+    public EvalResults submitCalculation(String solverId, EvalCondition condition)
     {
         try
         {
-            System.out.println("Hello from CalculationsProvider");
             var solver = (Solver) solvers.getInstanceForName(solverId);
             return solver.GetSolution(condition);
         }

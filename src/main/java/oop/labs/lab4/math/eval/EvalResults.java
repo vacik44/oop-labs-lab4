@@ -6,14 +6,14 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("evalResults")
 @SuppressWarnings("unused")
-public final class EvaluationResult
+public final class EvalResults
 {
     @JsonProperty("result") private final Object result;
     @JsonProperty("solution") private final SolutionNode solution;
 
 
-    @JsonCreator public EvaluationResult(@JsonProperty("result") Object result,
-                                         @JsonProperty("solution") SolutionNode solution)
+    @JsonCreator public EvalResults(@JsonProperty("result") Object result,
+                                    @JsonProperty("solution") SolutionNode solution)
     {
         this.result = result;
         this.solution = solution;

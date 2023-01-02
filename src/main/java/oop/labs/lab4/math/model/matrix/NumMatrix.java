@@ -13,21 +13,6 @@ public abstract class NumMatrix implements MatrixNumeric
 
 
     @Override
-    public boolean equivalent(MathObject o)
-    {
-        if (this == o) return true;
-        if (!(o instanceof Matrix<?> other)) return false;
-
-        if (!Arrays.equals(size(), other.size())) return false;
-        for (var i = 1; i <= rows(); i++)
-            for (var j = 1; j <= cols(); j++)
-                if (!other.get(i, j).equals(get(i, j)))
-                    return false;
-
-        return true;
-    }
-
-    @Override
     public boolean equals(Object o)
     {
         if (this == o) return true;
@@ -157,30 +142,13 @@ public abstract class NumMatrix implements MatrixNumeric
     }
 
 
-    @Override
-    public int[] size()
-    {
-        return new int[] {rows(), cols()};
-    }
+    @Override public int[] size() { return new int[] {rows(), cols()};}
 
-    @Override
-    public int rows()
-    {
-        return elements.size();
-    }
-
-    @Override
-    public int cols()
-    {
-        return rows() == 0 ? 0 : elements.get(0).size();
-    }
+    @Override public int rows() { return elements.size(); }
+    @Override public int cols() { return rows() == 0 ? 0 : elements.get(0).size(); }
 
 
-    @Override
-    public BigDecimal get(int row, int col)
-    {
-        return elements.get(row - 1).get(col - 1);
-    }
+    @Override public BigDecimal get(int row, int col) { return elements.get(row - 1).get(col - 1); }
 
 
     @Override
