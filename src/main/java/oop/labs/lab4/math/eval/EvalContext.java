@@ -10,8 +10,8 @@ import java.math.RoundingMode;
 
 public class EvalContext
 {
-    public static final EvalContext DEFAULT_COMPUTING_CONTEXT = new EvalContext(25, RoundingMode.HALF_UP);
-    public static final EvalContext DEFAULT_PRESENTATION_CONTEXT = new EvalContext(4, RoundingMode.HALF_UP);
+    public static final EvalContext DEFAULT_COMPUTING_CONTEXT = new EvalContext(50, RoundingMode.HALF_UP);
+    public static final EvalContext DEFAULT_PRESENTATION_CONTEXT = new EvalContext(25, RoundingMode.HALF_UP);
 
 
     @JsonIgnore private final MathContext mathContext;

@@ -50,7 +50,16 @@ public abstract class NumMatrix implements MatrixNumeric
     }
     protected List<List<BigDecimal>> buildRoundedMatrix(MathContext mc)
     {
-        return elements.stream().map(row -> row.stream().map(val -> val.round(mc)).toList()).toList();
+        var source = new ArrayList<List<BigDecimal>>(rows());
+
+        for (var originRow: elements)
+        {
+            var srcRow = new ArrayList<BigDecimal>(cols());
+            for (var element: originRow) srcRow.add(element.round(mc));
+            source.add(srcRow);
+        }
+
+        return source;
     }
 
 

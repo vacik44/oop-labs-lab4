@@ -1,5 +1,6 @@
 plugins {
 	id 'java'
+	id 'idea'
 	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
 }
@@ -25,11 +26,62 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.1'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.assertj:assertj-core:3.23.1'
+	testImplementation 'junit:junit:4.13.2'
 }
 
-tasks.named('test') {
+sourceSets {
+	test_integration {
+		java.srcDir "$projectDir/src/test_integration/java"
+		resources.srcDir "$projectDir/src/test-integration/resources"
+		compileClasspath += main.output + test.output
+		runtimeClasspath += main.output + test.output
+	}
+
+	test_unit {
+		java.srcDir "$projectDir/src/test_unit/java"
+		resources.srcDir "$projectDir/src/test-unit/resources"
+		compileClasspath += main.output + test.output
+		runtimeClasspath += main.output + test.output
+	}
+}
+
+idea {
+	module {
+		sourceDirs -= file('src/test_integration/java')
+		testSourceDirs += file('src/test_integration/java')
+	}
+
+	module {
+		sourceDirs -= file('src/test_unit/java')
+		testSourceDirs += file('src/test_unit/java')
+	}
+}
+
+configurations {
+	test_integrationImplementation.extendsFrom testImplementation
+	test_integrationRuntime.extendsFrom testRuntime
+
+	test_unitImplementation.extendsFrom testImplementation
+	test_unitRuntime.extendsFrom testRuntime
+}
+
+task integrationTest(type: Test) {
+	testClassesDirs = sourceSets.test_integration.output.classesDirs
+	classpath = sourceSets.test_integration.runtimeClasspath
+}
+
+task unitTest(type: Test) {
+	testClassesDirs = sourceSets.test_unit.output.classesDirs
+	classpath = sourceSets.test_unit.runtimeClasspath
+}
+
+check.dependsOn integrationTest
+check.dependsOn unitTest
+
+tasks.named('integrationTest') {
 	useJUnitPlatform()
 }
