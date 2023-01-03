@@ -10,4 +10,4 @@ import org.junit.runners.Suite;
         MatrixModelTests.class,
         SimpletsModelTests.class
 })
-public class MathModelTests {}
+public class ModelTests {}

@@ -8,7 +8,6 @@ public class CustomHelpers
     {
         return BigDecimal.valueOf(value);
     }
-
     public static BigDecimal num(double value)
     {
         return BigDecimal.valueOf(value);

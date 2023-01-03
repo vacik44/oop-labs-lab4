@@ -3,11 +3,14 @@ package oop.labs.lab4.math.eval;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonRootName("evalResults")
 public final class EvalResults
 {
-    @JsonProperty("result") private final Object result;
+    @JsonProperty("result")
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+    private final Object result;
     @JsonProperty("solution") private final SolutionNode solution;
 
 

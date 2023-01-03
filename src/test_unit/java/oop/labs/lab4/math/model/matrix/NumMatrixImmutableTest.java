@@ -17,7 +17,7 @@ public class NumMatrixImmutableTest
     @Test
     public void testIsImmutable()
     {
-        assertThat(new NumMatrixImmutable(1, 1, null).isImmutable()).isTrue();
+        assertThat(new NumMatrixImmutable(1, 1, null)).isDefinedAsImmutable();
     }
 
     @Test

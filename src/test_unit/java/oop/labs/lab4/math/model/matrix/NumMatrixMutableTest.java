@@ -8,13 +8,14 @@ import java.util.List;
 
 import static oop.labs.lab4.asserts.CustomHelpers.num;
 import static org.assertj.core.api.Assertions.assertThat;
+import static oop.labs.lab4.asserts.CustomAssertions.assertThat;
 
 public class NumMatrixMutableTest
 {
     @Test
     public void testIsImmutable()
     {
-        assertThat(new NumMatrixMutable(1, 1, null).isImmutable()).isFalse();
+        assertThat(new NumMatrixMutable(1, 1, null)).isNotDefinedAsImmutable();
     }
 
     @Test

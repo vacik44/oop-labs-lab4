@@ -1,15 +1,12 @@
 package oop.labs.lab4.asserts;
 
-import oop.labs.lab4.math.model.MathObject;
 import oop.labs.lab4.math.model.matrix.Matrix;
-import org.assertj.core.api.ObjectAssert;
-
 import java.lang.reflect.Array;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MatrixAssert<TElement> extends ObjectAssert<Matrix<TElement>>
+public class MatrixAssert<TElement> extends MathObjectAssert<Matrix<TElement>>
 {
     TElement[][] actualContent;
     Class<TElement> actualContentType;
@@ -71,27 +68,13 @@ public class MatrixAssert<TElement> extends ObjectAssert<Matrix<TElement>>
         return this;
     }
 
-    public MatrixAssert<TElement> hasSameSizeAs(Matrix<TElement> expected)
-    {
+    public MatrixAssert<TElement> hasSameSizeAs(Matrix<TElement> expected) {
         var actualSize = actual.size();
 
         assertThat(actualSize).containsExactly(expected.size());
         assertThat(actual.rows()).isEqualTo(actualSize[0]).isEqualTo(expected.rows());
         assertThat(actual.cols()).isEqualTo(actualSize[1]).isEqualTo(expected.cols());
 
-        return this;
-    }
-
-
-    public MatrixAssert<TElement> isEquivalentOf(MathObject other)
-    {
-        assertThat(actual.equivalent(other)).isTrue();
-        return this;
-    }
-
-    public MatrixAssert<TElement> isNotEquivalentOf(MathObject other)
-    {
-        assertThat(actual.equivalent(other)).isFalse();
         return this;
     }
 

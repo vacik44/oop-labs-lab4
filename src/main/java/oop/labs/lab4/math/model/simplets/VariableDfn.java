@@ -24,7 +24,7 @@ public final class VariableDfn implements VariableDefinition
         if (this == o) return true;
         if (!(o instanceof VariableDefinition other)) return false;
 
-        if (name().equals(other.name())) return false;
+        if (!name().equals(other.name())) return false;
         if (!Objects.equals(index(), other.index())) return false;
         return Objects.equals(subName(), other.subName());
     }
@@ -64,7 +64,15 @@ public final class VariableDfn implements VariableDefinition
     public VariableDfn(String name) { this(name, null, null); }
 
 
-    public static VariableDfn parse(String source) throws ParseException { return parse(new ParsingSource(source)); }
+    public static VariableDfn parse(String source) throws ParseException
+    {
+        var parsingSource = new ParsingSource(source);
+        var parsed = parse(parsingSource);
+
+        if (parsed == null || parsingSource.hasCurrent()) throw parsingSource.createException();
+        return parsed;
+    }
+
     public static VariableDfn parse(ParsingSourceIterator source) throws ParseException
     {
         String name = MathParser.parseAlpha(source);
