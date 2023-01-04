@@ -2,6 +2,7 @@ package oop.labs.lab4.data;
 
 import oop.labs.lab4.ApplicationException;
 
+@SuppressWarnings("unused")
 public class DataAccessException extends ApplicationException
 {
     public DataAccessException() {}

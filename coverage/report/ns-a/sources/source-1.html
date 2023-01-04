@@ -1,0 +1,168 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LU</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.math.model.containers</a>
+</div>
+
+<h1>Coverage Summary for Class: LU (oop.labs.lab4.math.model.containers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LU</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/16)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.math.model.containers;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.*;
+&nbsp;import oop.labs.lab4.math.model.MathObject;
+&nbsp;import oop.labs.lab4.math.model.matrix.MatrixNumeric;
+&nbsp;
+&nbsp;import java.math.BigDecimal;
+&nbsp;import java.util.Arrays;
+&nbsp;import java.util.Objects;
+&nbsp;
+&nbsp;@JsonTypeName(&quot;decompositionLU&quot;)
+&nbsp;@JsonIncludeProperties({&quot;L&quot;, &quot;U&quot;})
+&nbsp;@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = &quot;@type&quot;)
+&nbsp;@SuppressWarnings(&quot;unused&quot;)
+&nbsp;public final class LU implements MathObject
+&nbsp;{
+<b class="fc">&nbsp;    @Override public boolean isImmutable() { return true; }</b>
+&nbsp;
+&nbsp;
+&nbsp;    @JsonProperty(&quot;L&quot;)
+&nbsp;    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = &quot;@type&quot;)
+&nbsp;    private final MatrixNumeric lower;
+&nbsp;    @JsonProperty(&quot;U&quot;)
+&nbsp;    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = &quot;@type&quot;)
+&nbsp;    private final MatrixNumeric upper;
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equivalent(MathObject o)
+&nbsp;    {
+<b class="fc">&nbsp;        if (this == o) return true;</b>
+<b class="fc">&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="fc">&nbsp;        LU lu = (LU) o;</b>
+<b class="fc">&nbsp;        return lower.equivalent(lu.lower) &amp;&amp; upper.equivalent(lu.upper);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o)
+&nbsp;    {
+<b class="fc">&nbsp;        if (this == o) return true;</b>
+<b class="fc">&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+<b class="fc">&nbsp;        LU lu = (LU) o;</b>
+<b class="fc">&nbsp;        return lower.equals(lu.lower) &amp;&amp; upper.equals(lu.upper);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode()
+&nbsp;    {
+<b class="fc">&nbsp;        return Objects.hash(lower, upper);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @JsonCreator public LU(@JsonProperty(&quot;L&quot;) MatrixNumeric lower, @JsonProperty(&quot;U&quot;) MatrixNumeric upper)
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        this.lower = lower;</b>
+<b class="fc">&nbsp;        this.upper = upper;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public MatrixNumeric lower() { return lower; }</b>
+<b class="fc">&nbsp;    public MatrixNumeric upper() { return upper; }</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public BigDecimal computeOriginDet() { return Arrays.stream(lower.diag()).reduce(BigDecimal.ONE, BigDecimal::multiply); }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

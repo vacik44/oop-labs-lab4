@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.text.ParseException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static oop.labs.lab4.asserts.CustomAssertions.assertThat;
+import static oop.labs.lab4.assertion.CustomAssertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class VariableDfnTest

@@ -2,6 +2,7 @@ package oop.labs.lab4.data.repos;
 
 import oop.labs.lab4.data.DataAccessException;
 
+@SuppressWarnings("unused")
 public class RepositoryException extends DataAccessException
 {
     public RepositoryException() {}

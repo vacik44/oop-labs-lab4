@@ -3,12 +3,12 @@ package oop.labs.lab4.math.model.matrix;
 import java.util.List;
 import java.math.BigDecimal;
 
-import oop.labs.lab4.asserts.CustomAssertions;
-import oop.labs.lab4.asserts.CustomHelpers;
+import oop.labs.lab4.assertion.CustomAssertions;
+import oop.labs.lab4.assertion.CustomHelpers;
 import org.junit.Test;
 
-import static oop.labs.lab4.asserts.CustomHelpers.num;
-import static oop.labs.lab4.asserts.CustomAssertions.assertThat;
+import static oop.labs.lab4.assertion.CustomHelpers.num;
+import static oop.labs.lab4.assertion.CustomAssertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 

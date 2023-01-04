@@ -6,10 +6,10 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import static oop.labs.lab4.asserts.CustomAssertions.assertThat;
+import static oop.labs.lab4.assertion.CustomAssertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.assertThat;
-import static oop.labs.lab4.asserts.CustomHelpers.num;
+import static oop.labs.lab4.assertion.CustomHelpers.num;
 
 public class NumMatrixSpecificTest
 {

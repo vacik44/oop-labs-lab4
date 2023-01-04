@@ -8,6 +8,7 @@ import java.math.MathContext;
 import java.util.Optional;
 
 @JsonTypeName("evalCondition")
+@SuppressWarnings("unused")
 public final class EvalCondition
 {
     @JsonProperty("computingContext") private final EvalContext computingContext;

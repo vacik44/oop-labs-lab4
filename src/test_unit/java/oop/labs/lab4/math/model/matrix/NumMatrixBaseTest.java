@@ -1,7 +1,7 @@
 package oop.labs.lab4.math.model.matrix;
 
-import oop.labs.lab4.asserts.CustomAssertions;
-import oop.labs.lab4.asserts.CustomHelpers;
+import oop.labs.lab4.assertion.CustomAssertions;
+import oop.labs.lab4.assertion.CustomHelpers;
 import org.junit.Test;
 import java.math.BigDecimal;
 

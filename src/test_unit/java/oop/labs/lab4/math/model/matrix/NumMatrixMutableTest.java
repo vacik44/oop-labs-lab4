@@ -1,14 +1,14 @@
 package oop.labs.lab4.math.model.matrix;
 
-import oop.labs.lab4.asserts.CustomAssertions;
-import oop.labs.lab4.asserts.CustomHelpers;
+import oop.labs.lab4.assertion.CustomAssertions;
+import oop.labs.lab4.assertion.CustomHelpers;
 import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static oop.labs.lab4.asserts.CustomHelpers.num;
+import static oop.labs.lab4.assertion.CustomHelpers.num;
 import static org.assertj.core.api.Assertions.assertThat;
-import static oop.labs.lab4.asserts.CustomAssertions.assertThat;
+import static oop.labs.lab4.assertion.CustomAssertions.assertThat;
 
 public class NumMatrixMutableTest
 {

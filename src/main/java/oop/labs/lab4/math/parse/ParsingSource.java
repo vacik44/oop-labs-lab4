@@ -3,6 +3,7 @@ package oop.labs.lab4.math.parse;
 import java.text.ParseException;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public final class ParsingSource implements ParsingSourceIterator
 {
     private String origin;

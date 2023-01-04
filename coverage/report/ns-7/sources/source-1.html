@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > EvalCondition</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.math.eval</a>
+</div>
+
+<h1>Coverage Summary for Class: EvalCondition (oop.labs.lab4.math.eval)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EvalCondition</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    70%
+  </span>
+  <span class="absValue">
+    (7/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    76,9%
+  </span>
+  <span class="absValue">
+    (10/13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.math.eval;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonCreator;
+&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+&nbsp;import com.fasterxml.jackson.annotation.JsonTypeInfo;
+&nbsp;import com.fasterxml.jackson.annotation.JsonTypeName;
+&nbsp;import java.math.MathContext;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;@JsonTypeName(&quot;evalCondition&quot;)
+&nbsp;@SuppressWarnings(&quot;unused&quot;)
+&nbsp;public final class EvalCondition
+&nbsp;{
+&nbsp;    @JsonProperty(&quot;computingContext&quot;) private final EvalContext computingContext;
+&nbsp;    @JsonProperty(&quot;presentationContext&quot;) private final EvalContext presentationContext;
+&nbsp;    @JsonProperty(&quot;task&quot;)
+&nbsp;    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = &quot;@type&quot;)
+&nbsp;    private final Object mathTask;
+&nbsp;
+&nbsp;
+&nbsp;    public EvalCondition(Object mathTask)
+&nbsp;    {
+<b class="fc">&nbsp;        this(mathTask, null, null);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public EvalCondition(Object mathTask, EvalContext presentationContext)
+&nbsp;    {
+<b class="nc">&nbsp;        this(mathTask, presentationContext, null);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @JsonCreator
+&nbsp;    public EvalCondition(@JsonProperty(&quot;task&quot;) Object mathTask,
+&nbsp;                         @JsonProperty(&quot;presentationContext&quot;) EvalContext presentationContext,
+&nbsp;                         @JsonProperty(&quot;computingContext&quot;) EvalContext computingContext)
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        this.mathTask = mathTask;</b>
+<b class="fc">&nbsp;        this.presentationContext = Optional.ofNullable(presentationContext).orElse(EvalContext.DEFAULT_PRESENTATION_CONTEXT);</b>
+<b class="fc">&nbsp;        this.computingContext = Optional.ofNullable(computingContext).orElse(EvalContext.DEFAULT_COMPUTING_CONTEXT);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public EvalCondition sameContextCondition(Object newTask) { return new EvalCondition(newTask, presentationContext, computingContext); }</b>
+<b class="fc">&nbsp;    public EvalCondition computingSubCondition(Object subTask) { return new EvalCondition(subTask, computingContext, computingContext); }</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public MathContext presentationMc() { return presentationContext.getMathContext(); }</b>
+<b class="fc">&nbsp;    public MathContext computingMc() { return computingContext.getMathContext(); }</b>
+&nbsp;
+<b class="nc">&nbsp;    public EvalContext presentationContext() { return presentationContext; }</b>
+<b class="nc">&nbsp;    public EvalContext computingContext() { return computingContext; }</b>
+&nbsp;
+<b class="fc">&nbsp;    public Object task() { return mathTask; }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

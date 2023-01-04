@@ -1,0 +1,133 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SymmetricMatrixSignificanceSolver</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.math.eval.solvers</a>
+</div>
+
+<h1>Coverage Summary for Class: SymmetricMatrixSignificanceSolver (oop.labs.lab4.math.eval.solvers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SymmetricMatrixSignificanceSolver</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.math.eval.solvers;
+&nbsp;
+&nbsp;import oop.labs.lab4.math.eval.EvalCondition;
+&nbsp;import oop.labs.lab4.math.eval.EvalResults;
+&nbsp;import oop.labs.lab4.math.eval.SolutionNode;
+&nbsp;import oop.labs.lab4.math.eval.Solver;
+&nbsp;
+&nbsp;public class SymmetricMatrixSignificanceSolver implements Solver
+&nbsp;{
+&nbsp;    private final Solver symmetricMatrixSignificanceSilvesterSolver;
+&nbsp;
+&nbsp;
+&nbsp;    private SymmetricMatrixSignificanceSolver(Solver symmetricMatrixSignificanceSilvesterSolver)
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        this.symmetricMatrixSignificanceSilvesterSolver = symmetricMatrixSignificanceSilvesterSolver;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public EvalResults computeSolution(EvalCondition condition)
+&nbsp;    {
+<b class="fc">&nbsp;        var solution = new SolutionNode(&quot;Check significance of matrix:&quot;, condition.task(), 2);</b>
+&nbsp;
+<b class="fc">&nbsp;        var silvesterResults = symmetricMatrixSignificanceSilvesterSolver.computeSolution(condition);</b>
+<b class="fc">&nbsp;        solution.addNode(silvesterResults.solution());</b>
+&nbsp;
+<b class="fc">&nbsp;        solution.newFinalNode(&quot;Resolved significance type:&quot;, silvesterResults.result());</b>
+<b class="fc">&nbsp;        return new EvalResults(silvesterResults.result(), solution);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

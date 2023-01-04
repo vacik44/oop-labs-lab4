@@ -1,5 +1,6 @@
 package oop.labs.lab4.service.exceptions;
 
+@SuppressWarnings("unused")
 public class SolverNotFoundException extends ApplicationClassifiedException
 {
     public SolverNotFoundException() {}

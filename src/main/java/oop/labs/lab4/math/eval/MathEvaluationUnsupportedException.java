@@ -3,8 +3,10 @@ package oop.labs.lab4.math.eval;
 import oop.labs.lab4.math.model.anynomials.Polynomial;
 import oop.labs.lab4.math.model.matrix.Matrix;
 
+@SuppressWarnings("unused")
 public class MathEvaluationUnsupportedException extends MathEvaluationException
 {
+    public MathEvaluationUnsupportedException() {}
     public MathEvaluationUnsupportedException(String msg) { super(msg); }
     public MathEvaluationUnsupportedException(Throwable cause) { super(cause); }
 

@@ -12,6 +12,7 @@ import java.util.*;
 @JsonTypeName("polynomial")
 @JsonIncludeProperties("expression")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+@SuppressWarnings("unused")
 public final class PPolynomial implements Polynomial
 {
     @Override public boolean isImmutable() { return true; }

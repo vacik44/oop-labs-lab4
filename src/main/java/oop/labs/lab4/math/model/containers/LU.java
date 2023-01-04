@@ -11,6 +11,7 @@ import java.util.Objects;
 @JsonTypeName("decompositionLU")
 @JsonIncludeProperties({"L", "U"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+@SuppressWarnings("unused")
 public final class LU implements MathObject
 {
     @Override public boolean isImmutable() { return true; }

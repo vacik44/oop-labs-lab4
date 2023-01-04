@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.Optional;
 import java.util.Set;
 
+@SuppressWarnings("unused")
 public class PMononomialOdded implements MononomialOdded
 {
     @Override public boolean isImmutable() { return true; }
@@ -54,7 +55,15 @@ public class PMononomialOdded implements MononomialOdded
 
 
 
-    public static PMononomialOdded parse(String source) throws ParseException { return parse(new ParsingSource(source)); }
+    public static PMononomialOdded parse(String source) throws ParseException
+    {
+        var parsingSource = new ParsingSource(source);
+        var parsed = parse(parsingSource);
+
+        if (parsed == null || parsingSource.hasCurrent()) throw parsingSource.createException();
+        return parsed;
+    }
+
     public static PMononomialOdded parse(ParsingSourceIterator source) throws ParseException
     {
         var odd = MathParser.parseNum(source);

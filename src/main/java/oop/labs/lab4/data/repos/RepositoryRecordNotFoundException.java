@@ -1,5 +1,6 @@
 package oop.labs.lab4.data.repos;
 
+@SuppressWarnings("unused")
 public class RepositoryRecordNotFoundException extends RepositoryException
 {
     public RepositoryRecordNotFoundException() {}

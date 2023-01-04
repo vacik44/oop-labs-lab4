@@ -1,0 +1,230 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > PPolynomial</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.math.model.anynomials</a>
+</div>
+
+<h1>Coverage Summary for Class: PPolynomial (oop.labs.lab4.math.model.anynomials)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PPolynomial</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    56,5%
+  </span>
+  <span class="absValue">
+    (13/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64,4%
+  </span>
+  <span class="absValue">
+    (29/45)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.math.model.anynomials;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.*;
+&nbsp;import oop.labs.lab4.math.model.simplets.VariableDefinition;
+&nbsp;import oop.labs.lab4.math.parse.ParsingSource;
+&nbsp;import oop.labs.lab4.math.parse.ParsingSourceIterator;
+&nbsp;
+&nbsp;import java.math.BigDecimal;
+&nbsp;import java.text.ParseException;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;@JsonTypeName(&quot;polynomial&quot;)
+&nbsp;@JsonIncludeProperties(&quot;expression&quot;)
+&nbsp;@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = &quot;@type&quot;)
+&nbsp;@SuppressWarnings(&quot;unused&quot;)
+&nbsp;public final class PPolynomial implements Polynomial
+&nbsp;{
+<b class="fc">&nbsp;    @Override public boolean isImmutable() { return true; }</b>
+&nbsp;
+&nbsp;
+&nbsp;    private final Map&lt;Mononomial, BigDecimal&gt; mononomials;
+&nbsp;    private final Set&lt;VariableDefinition&gt; variables;
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o)
+&nbsp;    {
+<b class="nc">&nbsp;        if (this == o) return true;</b>
+<b class="nc">&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        PPolynomial that = (PPolynomial) o;</b>
+&nbsp;
+<b class="nc">&nbsp;        return mononomials.equals(that.mononomials);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode()
+&nbsp;    {
+<b class="nc">&nbsp;        return mononomials.hashCode();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private PPolynomial(Map&lt;Mononomial, BigDecimal&gt; mononomials, Set&lt;VariableDefinition&gt; variables)
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        this.mononomials = mononomials;</b>
+<b class="fc">&nbsp;        this.variables = variables;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static PPolynomial of(Map&lt;Mononomial, BigDecimal&gt; mononomials, boolean copy)
+&nbsp;    {
+<b class="fc">&nbsp;        var variablesSet = new HashSet&lt;VariableDefinition&gt;();</b>
+<b class="fc">&nbsp;        for (var mononomial: mononomials.keySet()) variablesSet.addAll(mononomial.variables());</b>
+<b class="fc">&nbsp;        return new PPolynomial(copy ? new HashMap&lt;&gt;(mononomials) : mononomials, variablesSet);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static PPolynomial of(Iterable&lt;MononomialOdded&gt; mononomials)
+&nbsp;    {
+<b class="nc">&nbsp;        var mononomialsMap = new HashMap&lt;Mononomial, BigDecimal&gt;();</b>
+<b class="nc">&nbsp;        for (var mononomial: mononomials) mononomialsMap.put(mononomial.mononomial(), mononomial.odd());</b>
+<b class="nc">&nbsp;        return PPolynomial.of(mononomialsMap, false);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static PPolynomial of(Map&lt;Mononomial, BigDecimal&gt; mononomials)
+&nbsp;    {
+<b class="nc">&nbsp;        return PPolynomial.of(mononomials, true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    @JsonCreator public static PPolynomial parse(@JsonProperty(&quot;expression&quot;) String source) throws ParseException { return parse(new ParsingSource(source)); }</b>
+&nbsp;    public static PPolynomial parse(ParsingSourceIterator source) throws ParseException
+&nbsp;    {
+<b class="fc">&nbsp;        var map = new HashMap&lt;Mononomial, BigDecimal&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        while (source.hasCurrent())</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var mononomial = PMononomialOdded.parse(source);</b>
+<b class="fc">&nbsp;            if (mononomial == null) throw source.createException();</b>
+&nbsp;
+<b class="fc">&nbsp;            if (map.containsKey(mononomial.mononomial()))</b>
+<b class="nc">&nbsp;                map.put(mononomial.mononomial(), map.get(mononomial.mononomial()).add(mononomial.odd()));</b>
+&nbsp;            else
+<b class="fc">&nbsp;                map.put(mononomial.mononomial(), mononomial.odd());</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return PPolynomial.of(map, false);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    @Override public int variablesCount() { return variables.size(); }</b>
+<b class="fc">&nbsp;    @Override public Set&lt;VariableDefinition&gt; variables() { return Collections.unmodifiableSet(variables); }</b>
+<b class="fc">&nbsp;    @Override public boolean containsVariable(VariableDefinition variable) { return variables.contains(variable); }</b>
+&nbsp;
+<b class="nc">&nbsp;    @Override public int monomialsCount() { return mononomials.size(); }</b>
+<b class="fc">&nbsp;    @Override public Set&lt;Mononomial&gt; mononomials() { return mononomials.keySet(); }</b>
+&nbsp;
+<b class="nc">&nbsp;    @Override public boolean containsMononomial(Mononomial mononomial) { return mononomials.containsKey(mononomial); }</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Iterable&lt;MononomialOdded&gt; mononomialsOdded()
+&nbsp;    {
+<b class="fc">&nbsp;        return mononomials.keySet()</b>
+<b class="fc">&nbsp;                .stream()</b>
+<b class="fc">&nbsp;                .map(mononomial -&gt; (MononomialOdded) new PMononomialOdded(mononomials.get(mononomial), mononomial))</b>
+<b class="fc">&nbsp;                .toList();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    @Override public Integer maxMononomialPower() { return mononomials.keySet().stream().max(Comparator.comparing(Mononomial::power)).orElseThrow().power(); }</b>
+<b class="nc">&nbsp;    @Override public Integer minMononomialPower() { return mononomials.keySet().stream().min(Comparator.comparing(Mononomial::power)).orElseThrow().power(); }</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    @Override public BigDecimal oddOf(Mononomial mononomial) { return mononomials.getOrDefault(mononomial, BigDecimal.ONE); }</b>
+<b class="fc">&nbsp;    @Override public BigDecimal oddOf(VariableDefinition... variables) { return oddOf(PMononomial.of(variables)); }</b>
+<b class="nc">&nbsp;    @Override public BigDecimal oddOfContained(Mononomial mononomial) { return mononomials.get(mononomial); }</b>
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    @JsonGetter(&quot;expression&quot;)
+&nbsp;    public String toExpression()
+&nbsp;    {
+<b class="fc">&nbsp;        var builder = new StringBuilder();</b>
+<b class="fc">&nbsp;        for (var mononmial: mononomialsOdded()) builder.append(mononmial);</b>
+<b class="fc">&nbsp;        return builder.toString();</b>
+&nbsp;    }
+&nbsp;
+<b class="nc">&nbsp;    @Override public String toString() { return toExpression(); }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

@@ -9,8 +9,9 @@ group = 'oop.labs'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+
 task copyApplicationResources(dependsOn: assemble) {
-	copy {from 'build/resources/main' into '.work/resources'}
+	copy {from 'src/main/resources' into '.work/resources'}
 }
 
 

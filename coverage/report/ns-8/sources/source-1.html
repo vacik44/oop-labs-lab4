@@ -1,0 +1,229 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > LUDecompositionSolver</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.math.eval.solvers</a>
+</div>
+
+<h1>Coverage Summary for Class: LUDecompositionSolver (oop.labs.lab4.math.eval.solvers)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LUDecompositionSolver</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/23)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">LUDecompositionSolver$SolverData</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (36/36)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.math.eval.solvers;
+&nbsp;
+&nbsp;import oop.labs.lab4.math.eval.EvalCondition;
+&nbsp;import oop.labs.lab4.math.eval.EvalResults;
+&nbsp;import oop.labs.lab4.math.eval.SolutionNode;
+&nbsp;import oop.labs.lab4.math.eval.Solver;
+&nbsp;import oop.labs.lab4.math.eval.MathEvaluationUnsupportedException;
+&nbsp;import oop.labs.lab4.math.model.containers.LU;
+&nbsp;import oop.labs.lab4.math.model.matrix.MatrixNumeric;
+&nbsp;import oop.labs.lab4.math.model.matrix.NumMatrixImmutable;
+&nbsp;import oop.labs.lab4.math.model.matrix.NumMatrixMutable;
+&nbsp;import java.math.BigDecimal;
+&nbsp;
+<b class="fc">&nbsp;public class LUDecompositionSolver implements Solver</b>
+&nbsp;{
+&nbsp;    @Override
+&nbsp;    public EvalResults computeSolution(EvalCondition condition)
+&nbsp;    {
+<b class="fc">&nbsp;        var data = SolverData.init(condition);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var i = 1; i &lt;= data.origin.rows(); i++) data.lower.set(i, 1, data.origin.get(i, 1));</b>
+<b class="fc">&nbsp;        data.solution.newFinalNode(&quot;Filling first column of L matrix with values from first column of origin matrix:&quot;, new NumMatrixImmutable(data.origin));</b>
+&nbsp;
+<b class="fc">&nbsp;        fillUpperLine(data, 1);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (data.origin.rows() &gt; 1)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            for (var i = 2; i &lt; data.origin.rows(); i++)</b>
+&nbsp;            {
+<b class="fc">&nbsp;                fillLowerColumn(data, i);</b>
+<b class="fc">&nbsp;                fillUpperLine(data, i);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            fillLowerColumn(data, data.origin.cols());</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        var resultLU = new LU(NumMatrixImmutable.immutable(data.lower), NumMatrixImmutable.immutable(data.upper));</b>
+<b class="fc">&nbsp;        data.solution.newFinalNode(&quot;Resulting LU-factorization:&quot;, resultLU);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new EvalResults(resultLU, data.solution);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static void fillLowerColumn(SolverData data, int col)
+&nbsp;    {
+<b class="fc">&nbsp;        for (var row = col; row &lt;= data.origin.rows(); row++)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var sum = BigDecimal.ZERO;</b>
+<b class="fc">&nbsp;            for (var i = 1; i &lt;= col; i++) sum = sum.add(data.lower.get(row, i).multiply(data.upper.get(i, col)));</b>
+<b class="fc">&nbsp;            data.lower.set(row, col, data.origin.get(row, col).subtract(sum));</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        data.solution.newFinalNode(String.format(&quot;Filling column %d of L matrix:&quot;, col), data.lower.rounded(data.condition.presentationMc()));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static void fillUpperLine(SolverData data, int row)
+&nbsp;    {
+<b class="fc">&nbsp;        for (var col = row + 1; col &lt;= data.origin.cols(); col++)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var sum = BigDecimal.ZERO;</b>
+<b class="fc">&nbsp;            for (var i = 1; i &lt;= row; i++) sum = sum.add(data.lower.get(row, i).multiply(data.upper.get(i, col)));</b>
+<b class="fc">&nbsp;            data.upper.set(row, col, data.origin.get(row, col).subtract(sum).divide(data.lower.get(row, row), data.condition.computingMc()));</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        data.solution.newFinalNode(String.format(&quot;Filling line %d of U matrix:&quot;, row), data.upper.rounded(data.condition.presentationMc()));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private static class SolverData
+&nbsp;    {
+&nbsp;        private final EvalCondition condition;
+&nbsp;        private final MatrixNumeric origin;
+&nbsp;        private final SolutionNode solution;
+&nbsp;        private final NumMatrixMutable lower;
+&nbsp;        private final NumMatrixMutable upper;
+&nbsp;
+&nbsp;
+&nbsp;        private SolverData(EvalCondition condition, MatrixNumeric origin, SolutionNode solution, NumMatrixMutable lower, NumMatrixMutable upper)
+<b class="fc">&nbsp;        {</b>
+<b class="fc">&nbsp;            this.condition = condition;</b>
+<b class="fc">&nbsp;            this.origin = origin;</b>
+<b class="fc">&nbsp;            this.solution = solution;</b>
+<b class="fc">&nbsp;            this.lower = lower;</b>
+<b class="fc">&nbsp;            this.upper = upper;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        public static SolverData init(EvalCondition condition)
+&nbsp;        {
+<b class="fc">&nbsp;            var origin = MathEvaluationUnsupportedException.throwIfNotSquare((MatrixNumeric)(condition.task()));</b>
+<b class="fc">&nbsp;            var solution = new SolutionNode(&quot;Perform LU-factorization for matrix:&quot;, origin);</b>
+&nbsp;
+<b class="fc">&nbsp;            var upper = NumMatrixMutable.eye(origin.rows());</b>
+<b class="fc">&nbsp;            solution.newFinalNode(&quot;Create empty upper matrix&quot;, new NumMatrixImmutable(upper));</b>
+&nbsp;
+<b class="fc">&nbsp;            var lower = new NumMatrixMutable(origin.rows(), origin.cols(), BigDecimal.ZERO);</b>
+<b class="fc">&nbsp;            solution.newFinalNode(&quot;Create empty lower matrix&quot;, new NumMatrixImmutable(lower));</b>
+&nbsp;
+<b class="fc">&nbsp;            return new SolverData(condition, origin, solution, lower, upper);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

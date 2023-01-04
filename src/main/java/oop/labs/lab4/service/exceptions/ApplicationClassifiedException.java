@@ -2,6 +2,7 @@ package oop.labs.lab4.service.exceptions;
 
 import oop.labs.lab4.ApplicationException;
 
+@SuppressWarnings("unused")
 public class ApplicationClassifiedException extends ApplicationException
 {
     public ApplicationClassifiedException() {}

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonRootName("evalResults")
+@SuppressWarnings("unused")
 public final class EvalResults
 {
     @JsonProperty("result")

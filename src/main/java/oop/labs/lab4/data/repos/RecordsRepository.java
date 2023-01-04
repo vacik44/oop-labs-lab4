@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+@SuppressWarnings("unused")
 public class RecordsRepository
 {
     protected final String CONTROL_FILE_NAME = ".ctrl";
@@ -70,7 +71,7 @@ public class RecordsRepository
     public <TRecord> TRecord getRecord(BigInteger id, Class<TRecord> type)
     {
         try { return serializationUnit.readValue(new File(rootPath, getFileNameForId(id)), type); }
-        catch (IOException e) { throw new RepositoryInternalException(e); }
+        catch (IOException e) { throw new RepositoryRecordNotFoundException(e); }
     }
 
 

@@ -1,5 +1,6 @@
 package oop.labs.lab4.data.repos;
 
+@SuppressWarnings("unused")
 public class RepositoryDisconnectedException extends RepositoryException
 {
     public RepositoryDisconnectedException(String msg) { super(msg); }

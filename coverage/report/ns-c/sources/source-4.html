@@ -1,0 +1,167 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > NumMatrixImmutable</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.math.model.matrix</a>
+</div>
+
+<h1>Coverage Summary for Class: NumMatrixImmutable (oop.labs.lab4.math.model.matrix)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NumMatrixImmutable</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (21/21)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (22/22)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.math.model.matrix;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.*;
+&nbsp;
+&nbsp;import java.math.BigDecimal;
+&nbsp;import java.math.MathContext;
+&nbsp;import java.util.Collections;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@JsonTypeName(&quot;numMatrix&quot;)
+&nbsp;@JsonIncludeProperties(&quot;elements&quot;)
+&nbsp;@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = &quot;@type&quot;)
+&nbsp;@SuppressWarnings(&quot;unused&quot;)
+&nbsp;public final class NumMatrixImmutable extends NumMatrix
+&nbsp;{
+<b class="fc">&nbsp;    @Override public boolean isImmutable() { return true; }</b>
+&nbsp;
+&nbsp;
+&nbsp;    private static List&lt;List&lt;BigDecimal&gt;&gt; makeImmutable(List&lt;List&lt;BigDecimal&gt;&gt; matrix)
+&nbsp;    {
+<b class="fc">&nbsp;        matrix.replaceAll(Collections::unmodifiableList);</b>
+<b class="fc">&nbsp;        return Collections.unmodifiableList(matrix);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @JsonCreator
+&nbsp;    private static NumMatrixImmutable instance(@JsonProperty(&quot;elements&quot;) List&lt;List&lt;BigDecimal&gt;&gt; elements)
+&nbsp;    {
+<b class="fc">&nbsp;        return new NumMatrixImmutable(elements, false);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private NumMatrixImmutable(List&lt;List&lt;BigDecimal&gt;&gt; elements, boolean ignored)
+&nbsp;    {
+<b class="fc">&nbsp;        super(makeImmutable(elements));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public NumMatrixImmutable() { this(buildMatrix(), false); }</b>
+<b class="fc">&nbsp;    public NumMatrixImmutable(int rows, int cols, BigDecimal init) { this(buildMatrix(rows, cols, init), false); }</b>
+<b class="fc">&nbsp;    public NumMatrixImmutable(BigDecimal[][] matrix) { this(buildMatrix(matrix), false); }</b>
+<b class="fc">&nbsp;    public &lt;TRow extends Iterable&lt;BigDecimal&gt;&gt; NumMatrixImmutable(Iterable&lt;TRow&gt; source) { this(buildMatrix(source), false); }</b>
+<b class="fc">&nbsp;    public NumMatrixImmutable(MatrixNumeric other) { this(buildMatrix(other), false); }</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public static NumMatrixImmutable immutable(NumMatrixMutable matrix) { return NumMatrixImmutable.instance(matrix.elements); }</b>
+<b class="fc">&nbsp;    public static NumMatrixImmutable eye(int size) { return NumMatrixImmutable.instance(buildIdentityMatrix(size)); }</b>
+&nbsp;
+<b class="fc">&nbsp;    @Override public NumMatrixImmutable angularMinorMatrix(int power) { return NumMatrixImmutable.instance(buildAngularMinorMatrix(power)); }</b>
+<b class="fc">&nbsp;    @Override public NumMatrixImmutable rounded(MathContext mc) { return NumMatrixImmutable.instance(buildRoundedMatrix(mc)); }</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    @Override public void round(MathContext mc) { throw new UnsupportedOperationException(); }</b>
+&nbsp;
+<b class="fc">&nbsp;    @Override public Matrix&lt;BigDecimal&gt; set(int row, int col, BigDecimal value) { throw new UnsupportedOperationException(); }</b>
+&nbsp;
+<b class="fc">&nbsp;    @Override public Matrix&lt;BigDecimal&gt; fillRow(int index, Iterable&lt;BigDecimal&gt; source) { throw new UnsupportedOperationException(); }</b>
+<b class="fc">&nbsp;    @Override public Matrix&lt;BigDecimal&gt; fillCol(int index, Iterable&lt;BigDecimal&gt; source) { throw new UnsupportedOperationException(); }</b>
+&nbsp;
+<b class="fc">&nbsp;    @Override public Matrix&lt;BigDecimal&gt; fillRow(int index, BigDecimal[] source) { throw new UnsupportedOperationException(); }</b>
+<b class="fc">&nbsp;    @Override public Matrix&lt;BigDecimal&gt; fillCol(int index, BigDecimal[] source) { throw new UnsupportedOperationException(); }</b>
+&nbsp;
+<b class="fc">&nbsp;    @Override public Matrix&lt;BigDecimal&gt; fill(BigDecimal[][] source) { throw new UnsupportedOperationException(); }</b>
+<b class="fc">&nbsp;    @Override public &lt;TRow extends Iterable&lt;BigDecimal&gt;&gt; Matrix&lt;BigDecimal&gt; fill(Iterable&lt;TRow&gt; source) { throw new UnsupportedOperationException(); }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

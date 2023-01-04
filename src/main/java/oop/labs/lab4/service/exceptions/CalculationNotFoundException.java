@@ -2,6 +2,7 @@ package oop.labs.lab4.service.exceptions;
 
 import java.math.BigInteger;
 
+@SuppressWarnings("unused")
 public class CalculationNotFoundException extends ApplicationClassifiedException
 {
     public CalculationNotFoundException() {}

@@ -3,6 +3,7 @@ package oop.labs.lab4;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "app")
+@SuppressWarnings("unused")
 public class ApplicationProperties
 {
     private ServiceProperties service;

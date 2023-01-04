@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public abstract class NumMatrix implements MatrixNumeric
 {
     @JsonProperty("elements") protected final List<List<BigDecimal>> elements;

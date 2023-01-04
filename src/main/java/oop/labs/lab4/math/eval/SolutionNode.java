@@ -6,6 +6,7 @@ import java.util.*;
 
 @JsonTypeName("solutionNode")
 @JsonIncludeProperties({"comment", "subNodes", "content"})
+@SuppressWarnings("unused")
 public final class SolutionNode
 {
     @JsonProperty("comment") private final String comment;

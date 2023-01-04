@@ -9,6 +9,7 @@ import oop.labs.lab4.math.parse.ParsingSource;
 import java.text.ParseException;
 import java.util.*;
 
+@SuppressWarnings("unused")
 public final class PMononomial implements Mononomial
 {
     @Override public boolean isImmutable() { return true; }
@@ -63,7 +64,15 @@ public final class PMononomial implements Mononomial
     }
 
 
-    public static PMononomial parse(String source) throws ParseException { return parse(new ParsingSource(source)); }
+    public static PMononomial parse(String source) throws ParseException
+    {
+        var parsingSource = new ParsingSource(source);
+        var parsed = parse(parsingSource);
+
+        if (parsed == null || parsingSource.hasCurrent()) throw parsingSource.createException();
+        return parsed;
+    }
+
     public static PMononomial parse(ParsingSourceIterator source) throws ParseException
     {
         var variables = new HashMap<VariableDefinition, Integer>();

@@ -1,10 +1,9 @@
 # OOP-Course \ Laboratory 4
 
----
-
 ### API Overview
-#### Application have full support of endpoints, requested by laboratory condition:  
-- ##### *'SubmitCalculations'* for checking polynomial quadratic form significance   
+Application have full support of endpoints, requested by laboratory condition:
+
+- *'SubmitCalculations'* for checking polynomial quadratic form significance   
   ```http
   POST /calculations/quadratic-form-significance
   Content-Type: application/json
@@ -16,9 +15,10 @@
       }
   }
   ```
-  This request will send stored calculation identifier as response.  
+  This request will send stored calculation identifier as response.
 
-- ##### *'LoadCalculationsResults'* for loading results by identifier from *'SubmitCalculations'* response
+
+- *'LoadCalculationsResults'* for loading results by identifier from *'SubmitCalculations'* response
   ```http
   GET /calculations/repository/1
   Content-Type: application/json

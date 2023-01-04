@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
+@SuppressWarnings("unused")
 public class EvalContext
 {
     public static final EvalContext DEFAULT_COMPUTING_CONTEXT = new EvalContext(50, RoundingMode.HALF_UP);
