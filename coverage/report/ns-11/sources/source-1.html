@@ -1,0 +1,145 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > EvaluationProvider</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.service.providers</a>
+</div>
+
+<h1>Coverage Summary for Class: EvaluationProvider (oop.labs.lab4.service.providers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EvaluationProvider</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.service.providers;
+&nbsp;
+&nbsp;import oop.labs.lab4.math.MathematicalException;
+&nbsp;import oop.labs.lab4.math.eval.EvalCondition;
+&nbsp;import oop.labs.lab4.math.eval.EvalResults;
+&nbsp;import oop.labs.lab4.math.eval.Solver;
+&nbsp;import oop.labs.lab4.service.exceptions.EvaluationFailedException;
+&nbsp;import oop.labs.lab4.service.exceptions.SolverNotFoundException;
+&nbsp;import oop.labs.lab4.service.mapping.ApplicationMapper;
+&nbsp;import oop.labs.lab4.service.mapping.MappingManagementException;
+&nbsp;import org.springframework.beans.factory.annotation.Qualifier;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;@Service
+&nbsp;public class EvaluationProvider
+&nbsp;{
+&nbsp;    private final ApplicationMapper solvers;
+&nbsp;
+&nbsp;
+&nbsp;    EvaluationProvider(@Qualifier(&quot;MathSolversMapper&quot;) ApplicationMapper solvers)
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        this.solvers = solvers;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public EvalResults evaluate(String solverId, EvalCondition condition)
+&nbsp;    {
+&nbsp;        try
+&nbsp;        {
+<b class="fc">&nbsp;            var solver = (Solver) solvers.getInstanceForName(solverId + &quot;-solver&quot;);</b>
+<b class="fc">&nbsp;            return solver.computeSolution(condition);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (MappingManagementException e)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            throw SolverNotFoundException.forId(solverId);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        catch (MathematicalException e)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            throw new EvaluationFailedException(e);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

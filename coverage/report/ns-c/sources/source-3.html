@@ -1,0 +1,286 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > NumMatrix</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.math.model.matrix</a>
+</div>
+
+<h1>Coverage Summary for Class: NumMatrix (oop.labs.lab4.math.model.matrix)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NumMatrix</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (68/68)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.math.model.matrix;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+&nbsp;
+&nbsp;import java.math.BigDecimal;
+&nbsp;import java.math.MathContext;
+&nbsp;import java.util.*;
+&nbsp;
+&nbsp;@SuppressWarnings(&quot;unused&quot;)
+&nbsp;public abstract class NumMatrix implements MatrixNumeric
+&nbsp;{
+&nbsp;    @JsonProperty(&quot;elements&quot;) protected final List&lt;List&lt;BigDecimal&gt;&gt; elements;
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public boolean equals(Object o)
+&nbsp;    {
+<b class="fc">&nbsp;        if (this == o) return true;</b>
+<b class="fc">&nbsp;        if (o == null || getClass() != o.getClass()) return false;</b>
+&nbsp;
+<b class="fc">&nbsp;        NumMatrix numMatrix = (NumMatrix) o;</b>
+&nbsp;
+<b class="fc">&nbsp;        return elements.equals(numMatrix.elements);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public int hashCode()
+&nbsp;    {
+<b class="fc">&nbsp;        return Objects.hash(elements);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    protected NumMatrix(List&lt;List&lt;BigDecimal&gt;&gt; elements)
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        this.elements = elements;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    protected List&lt;List&lt;BigDecimal&gt;&gt; buildAngularMinorMatrix(int power)
+&nbsp;    {
+<b class="fc">&nbsp;        var source = new ArrayList&lt;List&lt;BigDecimal&gt;&gt;(power);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var originRow: elements.subList(0, power))</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var srcRow = new ArrayList&lt;BigDecimal&gt;(power);</b>
+<b class="fc">&nbsp;            srcRow.addAll(originRow.subList(0, power));</b>
+<b class="fc">&nbsp;            source.add(srcRow);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return source;</b>
+&nbsp;    }
+&nbsp;    protected List&lt;List&lt;BigDecimal&gt;&gt; buildRoundedMatrix(MathContext mc)
+&nbsp;    {
+<b class="fc">&nbsp;        var source = new ArrayList&lt;List&lt;BigDecimal&gt;&gt;(rows());</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var originRow: elements)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var srcRow = new ArrayList&lt;BigDecimal&gt;(cols());</b>
+<b class="fc">&nbsp;            for (var element: originRow) srcRow.add(element.round(mc));</b>
+<b class="fc">&nbsp;            source.add(srcRow);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return source;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    protected static List&lt;List&lt;BigDecimal&gt;&gt; buildIdentityMatrix(int size)
+&nbsp;    {
+<b class="fc">&nbsp;        var source = new ArrayList&lt;List&lt;BigDecimal&gt;&gt;(size);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var i = 0; i &lt; size; i++)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var row = new ArrayList&lt;BigDecimal&gt;(size);</b>
+<b class="fc">&nbsp;            for (var j = 0; j &lt; size; j++)</b>
+<b class="fc">&nbsp;                row.add(BigDecimal.ZERO);</b>
+&nbsp;
+<b class="fc">&nbsp;            row.set(i, BigDecimal.ONE);</b>
+&nbsp;
+<b class="fc">&nbsp;            source.add(row);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return source;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    protected static List&lt;List&lt;BigDecimal&gt;&gt; buildMatrix()
+&nbsp;    {
+<b class="fc">&nbsp;        return new ArrayList&lt;&gt;(0);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected static List&lt;List&lt;BigDecimal&gt;&gt; buildMatrix(int rows, int cols, BigDecimal init)
+&nbsp;    {
+<b class="fc">&nbsp;        var matrix = new ArrayList&lt;List&lt;BigDecimal&gt;&gt;(rows);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var i = 0; i &lt; rows; i++)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var row = new ArrayList&lt;BigDecimal&gt;(cols);</b>
+&nbsp;
+<b class="fc">&nbsp;            for (var j = 0; j &lt; cols; j++)</b>
+<b class="fc">&nbsp;                row.add(init);</b>
+&nbsp;
+<b class="fc">&nbsp;            matrix.add(row);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return matrix;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected static List&lt;List&lt;BigDecimal&gt;&gt; buildMatrix(BigDecimal[][] source)
+&nbsp;    {
+<b class="fc">&nbsp;        var matrix = new ArrayList&lt;List&lt;BigDecimal&gt;&gt;(source.length);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var srcRow : source)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var row = new ArrayList&lt;BigDecimal&gt;(srcRow.length);</b>
+<b class="fc">&nbsp;            row.addAll(Arrays.asList(srcRow));</b>
+<b class="fc">&nbsp;            matrix.add(row);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return matrix;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected static &lt;TRow extends Iterable&lt;BigDecimal&gt;&gt; List&lt;List&lt;BigDecimal&gt;&gt; buildMatrix(Iterable&lt;TRow&gt; source)
+&nbsp;    {
+<b class="fc">&nbsp;        var matrix = new ArrayList&lt;List&lt;BigDecimal&gt;&gt;();</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var srcRow : source)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var row = new ArrayList&lt;BigDecimal&gt;();</b>
+<b class="fc">&nbsp;            for (var element : srcRow) row.add(element);</b>
+<b class="fc">&nbsp;            matrix.add(row);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return matrix;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected static List&lt;List&lt;BigDecimal&gt;&gt; buildMatrix(MatrixNumeric other)
+&nbsp;    {
+<b class="fc">&nbsp;        var matrix = new ArrayList&lt;List&lt;BigDecimal&gt;&gt;(other.rows());</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var i = 1; i &lt;= other.rows(); i++)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var content = new ArrayList&lt;BigDecimal&gt;(other.cols());</b>
+&nbsp;
+<b class="fc">&nbsp;            for (var element : other.row(i))</b>
+<b class="fc">&nbsp;                content.add(element);</b>
+&nbsp;
+<b class="fc">&nbsp;            matrix.add(content);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return matrix;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    @Override public int[] size() { return new int[] {rows(), cols()};}</b>
+&nbsp;
+<b class="fc">&nbsp;    @Override public int rows() { return elements.size(); }</b>
+<b class="fc">&nbsp;    @Override public int cols() { return rows() == 0 ? 0 : elements.get(0).size(); }</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    @Override public BigDecimal get(int row, int col) { return elements.get(row - 1).get(col - 1); }</b>
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Iterable&lt;BigDecimal&gt; row(int index)
+&nbsp;    {
+<b class="fc">&nbsp;        return Collections.unmodifiableList(elements.get(index - 1));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Iterable&lt;BigDecimal&gt; col(int index)
+&nbsp;    {
+<b class="fc">&nbsp;        var column = new ArrayList&lt;BigDecimal&gt;(rows());</b>
+<b class="fc">&nbsp;        var c = index - 1;</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var row : elements)</b>
+<b class="fc">&nbsp;            column.add(row.get(c));</b>
+&nbsp;
+<b class="fc">&nbsp;        return Collections.unmodifiableList(column);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    @Override public String toString() { return elements.toString(); }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SymmetricMatrixSignificanceSilvesterSolver</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.math.eval.solvers</a>
+</div>
+
+<h1>Coverage Summary for Class: SymmetricMatrixSignificanceSilvesterSolver (oop.labs.lab4.math.eval.solvers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SymmetricMatrixSignificanceSilvesterSolver</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (26/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.math.eval.solvers;
+&nbsp;
+&nbsp;import oop.labs.lab4.math.eval.EvalCondition;
+&nbsp;import oop.labs.lab4.math.eval.EvalResults;
+&nbsp;import oop.labs.lab4.math.eval.SolutionNode;
+&nbsp;import oop.labs.lab4.math.eval.Solver;
+&nbsp;import oop.labs.lab4.math.eval.MathEvaluationUnsupportedException;
+&nbsp;import oop.labs.lab4.math.model.enums.SignificanceType;
+&nbsp;import oop.labs.lab4.math.model.matrix.MatrixNumeric;
+&nbsp;
+&nbsp;import java.math.BigDecimal;
+&nbsp;
+&nbsp;public class SymmetricMatrixSignificanceSilvesterSolver implements Solver
+&nbsp;{
+&nbsp;    private final Solver matrixDeterminantSolver;
+&nbsp;
+&nbsp;
+&nbsp;    private SymmetricMatrixSignificanceSilvesterSolver(Solver matrixDeterminantSolver)
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        this.matrixDeterminantSolver = matrixDeterminantSolver;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public EvalResults computeSolution(EvalCondition condition)
+&nbsp;    {
+<b class="fc">&nbsp;        var matrix = MathEvaluationUnsupportedException.throwIfNotSquare((MatrixNumeric) condition.task());</b>
+<b class="fc">&nbsp;        var solution = new SolutionNode(&quot;Check significance of matrix by Silvester&#39;s criterion&quot;, matrix, 2);</b>
+&nbsp;
+<b class="fc">&nbsp;        var solutionMinors = new SolutionNode(&quot;Find signs of angular minors&quot;);</b>
+<b class="fc">&nbsp;        solution.addNode(solutionMinors);</b>
+&nbsp;
+<b class="fc">&nbsp;        var expectedSignForNegative = -1;</b>
+<b class="fc">&nbsp;        var negativeConfirmed = true;</b>
+<b class="fc">&nbsp;        var positiveConfirmed = true;</b>
+<b class="fc">&nbsp;        var power = 1;</b>
+&nbsp;
+<b class="fc">&nbsp;        while (power &lt;= matrix.rows() &amp;&amp; (negativeConfirmed || positiveConfirmed))</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var minor = matrix.angularMinorMatrix(power);</b>
+<b class="fc">&nbsp;            var detResults = matrixDeterminantSolver.computeSolution(condition.sameContextCondition(minor));</b>
+&nbsp;
+<b class="fc">&nbsp;            var sign = ((BigDecimal) detResults.result()).signum();</b>
+&nbsp;
+<b class="fc">&nbsp;            var minorSolution = new SolutionNode(String.format(&quot;Angular minor %d&quot;, power), minor, 1);</b>
+<b class="fc">&nbsp;            minorSolution.addNode(detResults.solution());</b>
+<b class="fc">&nbsp;            minorSolution.newFinalNode(&quot;The sign of minor is&quot; + (sign &gt; 0 ? &quot;+&quot; : sign == 0 ? &quot;undefined&quot; : &quot;-&quot;));</b>
+<b class="fc">&nbsp;            solutionMinors.addNode(minorSolution);</b>
+&nbsp;
+<b class="fc">&nbsp;            if (positiveConfirmed &amp;&amp; sign &lt;= 0) positiveConfirmed = false;</b>
+<b class="fc">&nbsp;            if (negativeConfirmed &amp;&amp; sign != expectedSignForNegative) negativeConfirmed = false;</b>
+<b class="fc">&nbsp;            else expectedSignForNegative = -expectedSignForNegative;</b>
+&nbsp;
+<b class="fc">&nbsp;            power++;</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        var result = negativeConfirmed ? SignificanceType.NEGATIVE : positiveConfirmed ? SignificanceType.POSITIVE : SignificanceType.UNDEFINED;</b>
+<b class="fc">&nbsp;        solution.newFinalNode(&quot;Resolved significance type:&quot;, result);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new EvalResults(result, solution);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

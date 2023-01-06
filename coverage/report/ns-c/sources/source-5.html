@@ -1,0 +1,275 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > NumMatrixMutable</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.math.model.matrix</a>
+</div>
+
+<h1>Coverage Summary for Class: NumMatrixMutable (oop.labs.lab4.math.model.matrix)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NumMatrixMutable</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (62/62)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.math.model.matrix;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.*;
+&nbsp;
+&nbsp;import java.math.BigDecimal;
+&nbsp;import java.math.MathContext;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@JsonTypeName(&quot;numMatrix&quot;)
+&nbsp;@JsonIncludeProperties(&quot;elements&quot;)
+&nbsp;@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = &quot;@type&quot;)
+&nbsp;@SuppressWarnings(&quot;unused&quot;)
+&nbsp;public class NumMatrixMutable extends NumMatrix
+&nbsp;{
+<b class="fc">&nbsp;    @Override public boolean isImmutable() { return false; }</b>
+&nbsp;
+&nbsp;
+&nbsp;    public NumMatrixMutable()
+&nbsp;    {
+<b class="fc">&nbsp;        super(buildMatrix());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @JsonCreator
+&nbsp;    protected static NumMatrixMutable instance(@JsonProperty(&quot;elements&quot;) List&lt;List&lt;BigDecimal&gt;&gt; elements)
+&nbsp;    {
+<b class="fc">&nbsp;        return new NumMatrixMutable(elements, false);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    protected NumMatrixMutable(List&lt;List&lt;BigDecimal&gt;&gt; elements, boolean ignored)
+&nbsp;    {
+<b class="fc">&nbsp;        super(elements);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public NumMatrixMutable(int rows, int cols, BigDecimal init) { this(buildMatrix(rows, cols, init), false); }</b>
+<b class="fc">&nbsp;    public NumMatrixMutable(BigDecimal[][] matrix) { this(buildMatrix(matrix), false); }</b>
+<b class="fc">&nbsp;    public &lt;TRow extends Iterable&lt;BigDecimal&gt;&gt; NumMatrixMutable(Iterable&lt;TRow&gt; source) { this(buildMatrix(source), false); }</b>
+<b class="fc">&nbsp;    public NumMatrixMutable(MatrixNumeric other) { this(buildMatrix(other), false); }</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public static NumMatrixMutable eye(int size) { return NumMatrixMutable.instance(buildIdentityMatrix(size)); }</b>
+&nbsp;
+<b class="fc">&nbsp;    @Override public NumMatrixMutable angularMinorMatrix(int power) { return NumMatrixMutable.instance(buildAngularMinorMatrix(power)); }</b>
+<b class="fc">&nbsp;    @Override public NumMatrixMutable rounded(MathContext mc) { return NumMatrixMutable.instance(buildRoundedMatrix(mc)); }</b>
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void round(MathContext mc)
+&nbsp;    {
+<b class="fc">&nbsp;        for (var row: elements)</b>
+<b class="fc">&nbsp;            for (var i = 0; i &lt; cols(); i++)</b>
+<b class="fc">&nbsp;                row.set(i, row.get(i).round(mc));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Matrix&lt;BigDecimal&gt; set(int row, int col, BigDecimal value)
+&nbsp;    {
+<b class="fc">&nbsp;        elements.get(row - 1).set(col - 1, value);</b>
+<b class="fc">&nbsp;        return this;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public NumMatrixMutable fillRow(int index, Iterable&lt;BigDecimal&gt; source)
+&nbsp;    {
+<b class="fc">&nbsp;        var row = elements.get(index - 1);</b>
+&nbsp;
+<b class="fc">&nbsp;        var i = 0;</b>
+<b class="fc">&nbsp;        for (var element: source)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            row.set(i, element);</b>
+<b class="fc">&nbsp;            i++;</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return this;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public NumMatrixMutable fillCol(int index, Iterable&lt;BigDecimal&gt; source)
+&nbsp;    {
+<b class="fc">&nbsp;        var i = 0;</b>
+<b class="fc">&nbsp;        var c = index - 1;</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var element: source)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            elements.get(i).set(c, element);</b>
+<b class="fc">&nbsp;            i++;</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return this;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public NumMatrixMutable fillRow(int index, BigDecimal[] source)
+&nbsp;    {
+<b class="fc">&nbsp;        var row = elements.get(index - 1);</b>
+&nbsp;
+<b class="fc">&nbsp;        var i = 0;</b>
+<b class="fc">&nbsp;        for (var element: source)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            row.set(i, element);</b>
+<b class="fc">&nbsp;            i++;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return this;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public NumMatrixMutable fillCol(int index, BigDecimal[] source)
+&nbsp;    {
+<b class="fc">&nbsp;        var i = 0;</b>
+<b class="fc">&nbsp;        var c = index - 1;</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var element: source)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            elements.get(i).set(c, element);</b>
+<b class="fc">&nbsp;            i++;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return this;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    @Override
+&nbsp;    @SuppressWarnings(&quot;DuplicatedCode&quot;)
+&nbsp;    public NumMatrixMutable fill(BigDecimal[][] source)
+&nbsp;    {
+<b class="fc">&nbsp;        var i = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var srcRow : source)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var row = elements.get(i);</b>
+<b class="fc">&nbsp;            var j = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;            for (var element : srcRow)</b>
+&nbsp;            {
+<b class="fc">&nbsp;                row.set(j, element);</b>
+<b class="fc">&nbsp;                j++;</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            i++;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return this;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    @SuppressWarnings(&quot;DuplicatedCode&quot;)
+&nbsp;    public &lt;TRow extends Iterable&lt;BigDecimal&gt;&gt; NumMatrixMutable fill(Iterable&lt;TRow&gt; source)
+&nbsp;    {
+<b class="fc">&nbsp;        var i = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;        for (var srcRow : source)</b>
+&nbsp;        {
+<b class="fc">&nbsp;            var row = elements.get(i);</b>
+<b class="fc">&nbsp;            var j = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;            for (var element : srcRow)</b>
+&nbsp;            {
+<b class="fc">&nbsp;                row.set(j, element);</b>
+<b class="fc">&nbsp;                j++;</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;
+<b class="fc">&nbsp;            i++;</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return this;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>

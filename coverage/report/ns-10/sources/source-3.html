@@ -1,0 +1,149 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > JsonTypesMapper</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">oop.labs.lab4.service.mapping</a>
+</div>
+
+<h1>Coverage Summary for Class: JsonTypesMapper (oop.labs.lab4.service.mapping)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">JsonTypesMapper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86,7%
+  </span>
+  <span class="absValue">
+    (13/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package oop.labs.lab4.service.mapping;
+&nbsp;
+&nbsp;import com.fasterxml.jackson.annotation.JsonTypeName;
+&nbsp;import oop.labs.lab4.data.configs.TypesMappingConfiguration;
+&nbsp;
+&nbsp;import java.util.Collection;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;public class JsonTypesMapper implements ApplicationMapper
+&nbsp;{
+&nbsp;    private final Map&lt;String, Class&lt;?&gt;&gt; typesMap;
+&nbsp;
+&nbsp;
+&nbsp;    public JsonTypesMapper(TypesMappingConfiguration configuration) throws MappingException
+<b class="fc">&nbsp;    {</b>
+<b class="fc">&nbsp;        typesMap = new HashMap&lt;&gt;();</b>
+&nbsp;
+&nbsp;        try
+&nbsp;        {
+<b class="fc">&nbsp;            for (var clazz : configuration.getClasses())</b>
+&nbsp;            {
+<b class="fc">&nbsp;                var entity = clazz.getClazz();</b>
+<b class="fc">&nbsp;                var annotations = entity.getAnnotationsByType(JsonTypeName.class);</b>
+<b class="fc">&nbsp;                var jsonName = annotations.length == 0 ? entity.getSimpleName() : annotations[0].value();</b>
+&nbsp;
+<b class="fc">&nbsp;                typesMap.put(jsonName, entity);</b>
+<b class="fc">&nbsp;            }</b>
+&nbsp;        }
+<b class="nc">&nbsp;        catch (ClassNotFoundException e)</b>
+&nbsp;        {
+<b class="nc">&nbsp;            throw new MappingInitiationException(e);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public Class&lt;?&gt; getClassForName(String name)
+&nbsp;    {
+<b class="fc">&nbsp;        var type = typesMap.get(name);</b>
+<b class="fc">&nbsp;        if (type == null) throw new MappingManagementException(String.format(&quot;Name &#39;%s&#39; was not mapped by current mapper.&quot;, name));</b>
+<b class="fc">&nbsp;        return type;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public Collection&lt;String&gt; getRegisteredNames() { return typesMap.keySet(); }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-01-04 03:59</div>
+</div>
+</body>
+</html>
